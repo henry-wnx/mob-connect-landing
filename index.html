@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mob-connect | Ditch the keys. Run your fleet digital.</title>
+    <meta name="description" content="Send your customer a digital key — a link that opens the car from their phone, wherever you parked it. No counter. No shuttle. No key handover.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ========== NAV ========== -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo" aria-label="mob-connect home">
+                <img src="assets/logo.png" alt="IturanMob" class="logo-img">
+            </a>
+            <button class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">&#9776;</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#problem">Why digital</a></li>
+                <li><a href="#how">How it works</a></li>
+                <li><a href="#control">Fleet control</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="press.html">Press</a></li>
+                <li><a href="#" class="btn btn-primary" data-demo-cta>Book a demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ========== 5.1 HERO ========== -->
+    <section class="hero">
+        <video class="hero-bg-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg" aria-hidden="true">
+            <source src="assets/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Ditch the keys.<br>Run your fleet <span class="text-teal">digital.</span></h1>
+                <p>Send your customer a digital key — a link that opens the car from their phone, wherever you parked it. No counter. No shuttle. No key handover.</p>
+                <div class="hero-btns">
+                    <a href="#" class="btn btn-primary btn-lg" data-demo-cta>Book a demo</a>
+                    <a href="#pricing" class="btn btn-ghost-light btn-lg">See pricing &mdash; from $9.99/vehicle/mo</a>
+                </div>
+                <p class="hero-reqs">
+                    <span class="req"><span class="check" aria-hidden="true">&check;</span> Live GPS tracking</span>
+                    <span class="req"><span class="check" aria-hidden="true">&check;</span> Remote Starter Disable</span>
+                    <span class="req"><span class="check" aria-hidden="true">&check;</span> Overspeed alerts</span>
+                    <span class="req-tail">&mdash; and the digital key that ends the counter.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 5.2 THE PROBLEM ========== -->
+    <section id="problem" class="problem-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="eyebrow">The problem</p>
+                <h2>Stop leaving your cars stuck at the counter.</h2>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M1 3h13v10H1z"/><path d="M14 8h4l3 3v2h-7z"/><circle cx="5.5" cy="16.5" r="1.8"/><circle cx="17.5" cy="16.5" r="1.8"/><path d="M7.5 16.5h8"/>
+                    </svg>
+                    <h3>You're paying drivers to ferry customers.</h3>
+                    <p>Every airport pickup burns a driver, fuel, and 20 minutes of your customer's time.</p>
+                </div>
+                <div class="problem-card">
+                    <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+                    </svg>
+                    <h3>You only earn when the counter's open.</h3>
+                    <p>Nights and weekends are dead inventory.</p>
+                </div>
+                <div class="problem-card">
+                    <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="8" cy="8" r="5"/><path d="M11.5 11.5 21 21"/><path d="M17 17l2-2"/><path d="M14 14l2-2"/>
+                    </svg>
+                    <h3>Every key handover is a risk.</h3>
+                    <p>Lost keys, duplicated keys, keys handed to the wrong person.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 5.3 HOW IT WORKS ========== -->
+    <section id="how" class="how-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="eyebrow">How it works</p>
+                <h2>Four steps. No counter.</h2>
+            </div>
+            <div class="how-layout">
+                <div class="how-steps">
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div><h4>Assign the vehicle.</h4><p>In the mob-connect admin, you assign a specific car from the fleet to the booking.</p></div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div><h4>Set the access window.</h4><p>Choose when the link starts and expires.</p></div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div><h4>Send the link.</h4><p>Paste it into your existing email, SMS, or WhatsApp workflow. It's a hyperlink — nothing to install.</p></div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div><h4>Track and revoke.</h4><p>Watch position live. Immobilize remotely if you need to. Access expires automatically.</p></div>
+                        </div>
+                    </div>
+                    <p class="how-callout">The link travels in your own email or SMS — your brand, your message, your customer.</p>
+                </div>
+                <div class="how-visual">
+                    <div class="architecture-wrapper">
+                        <!-- Placeholder per brief §5.3 — swap by replacing this one src with the produced asset path -->
+                        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201200%20900'%3E%3Crect%20width='1200'%20height='900'%20fill='%230c1c33'/%3E%3Ctext%20x='600'%20y='450'%20fill='rgba(255,255,255,0.4)'%20font-family='Inter,sans-serif'%20font-size='30'%20letter-spacing='3'%20text-anchor='middle'%20dominant-baseline='middle'%3EVisual%20in%20production%3C/text%3E%3C/svg%3E" alt="A customer opens the digital-key link on their phone and unlocks the car in a parking garage." class="architecture-img">
+                    </div>
+                    <p class="arch-caption">One link. From your system to their phone to the car.</p>
+                    <div class="api-upsell">
+                        <h4>mob-connect + API</h4>
+                        <p>Plug the same flow into your reservation system. Full read and command API.</p>
+                        <a href="#pricing" class="api-upsell-link">See API pricing &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 5.4 TOTAL CONTROL ========== -->
+    <section id="control" class="control-section">
+        <div class="container">
+            <div class="control-intro">
+                <p class="eyebrow">Your control</p>
+                <h2>Keyless, not control-less.</h2>
+                <p>Handing someone a physical key means losing sight of the car until it comes back. Going digital gives you <em>more</em> control than a key ever did — every vehicle on one map, and a kill switch when you need it.</p>
+            </div>
+            <div class="control-grid">
+                <div class="control-card">
+                    <svg class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>
+                    </svg>
+                    <h3>Live GPS position.</h3>
+                    <p>Every car in your fleet on one screen, in real time.</p>
+                </div>
+                <div class="control-card">
+                    <svg class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 3v8"/><path d="M6.5 6.5a8 8 0 1 0 11 0"/>
+                    </svg>
+                    <h3>Remote Starter Disable.</h3>
+                    <p>Disable the engine start when the car is parked — for non-payment, no-return, or theft. Re-enable the moment it's resolved.</p>
+                </div>
+                <div class="control-card">
+                    <svg class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 16a8 8 0 0 1 16 0"/><path d="M12 16l4-4"/><circle cx="12" cy="16" r="1"/>
+                    </svg>
+                    <h3>Overspeed alerts.</h3>
+                    <p>Know when a vehicle is being driven hard.</p>
+                </div>
+                <div class="control-card">
+                    <svg class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="7" width="18" height="10" rx="2"/><rect x="6" y="10.5" width="2.4" height="3"/><rect x="9.2" y="10.5" width="2.4" height="3"/><rect x="12.4" y="10.5" width="2.4" height="3"/><rect x="15.6" y="10.5" width="2.4" height="3"/>
+                    </svg>
+                    <h3>GPS odometer.</h3>
+                    <p>Track mileage without touching the dashboard.</p>
+                </div>
+            </div>
+            <p class="control-callout"><span>This is what makes keyless safe.</span> You never hand over a car you can't see or stop.</p>
+        </div>
+    </section>
+
+    <!-- ========== 5.5 TRUSTED BY (self-contained, removable block) ========== -->
+    <section id="trusted" class="trusted-section">
+        <div class="container">
+            <p class="eyebrow">Trusted by</p>
+            <h2 class="trusted-heading">Fleets already running on IturanMob.</h2>
+            <!-- Logos rendered from MOBCONNECT_CONFIG.CUSTOMER_LOGOS (data-driven) -->
+            <div class="trusted-logos" id="trustedLogos"></div>
+            <!-- Testimonial slot: hidden until a real quote is added to config -->
+            <div class="testimonial-slot" id="testimonialSlot" hidden>
+                <blockquote id="testimonialQuote"></blockquote>
+                <cite id="testimonialCite"></cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 5.6 WHY MOB-CONNECT ========== -->
+    <section id="why" class="why-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="eyebrow">Why mob-connect</p>
+                <h2>Why mob-connect</h2>
+            </div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/>
+                    </svg>
+                    <h3>Built for one job: digital handover.</h3>
+                    <p>And we do it better than any telematics generalist.</p>
+                </div>
+                <div class="why-card">
+                    <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3 21h18"/><path d="M5 21V8l7-4 7 4v13"/><path d="M9 21v-5h6v5"/><path d="M9 11h.01M12 11h.01M15 11h.01"/>
+                    </svg>
+                    <h3>30 years of Ituran behind the device.</h3>
+                    <p>Publicly traded (NASDAQ: ITRN). 2.6 million connected vehicles<a href="#why-sources" class="cite-ref" title="Ituran Form 20-F FY2025 (SEC)">1</a> across 9 markets. Your device is not a startup gamble.</p>
+                </div>
+                <div class="why-card">
+                    <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M14.7 6.3a4 4 0 0 0-5.66 5.66l-6.34 6.34 2 2 6.34-6.34a4 4 0 0 0 5.66-5.66l-2.5 2.5-1.4-.5-.5-1.4z"/>
+                    </svg>
+                    <h3>Hardwired, not a dongle.</h3>
+                    <p>Covert install, not an OBD plug. Thieves can't unplug what they can't find.</p>
+                </div>
+                <div class="why-card">
+                    <svg class="why-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/>
+                    </svg>
+                    <h3>80% stolen-vehicle recovery rate.<a href="#why-sources" class="cite-ref" title="Ituran PR, Oct 28 2025">2</a></h3>
+                    <p>Ituran group tech has recovered over $3 billion in stolen vehicles since 2006.<a href="#why-sources" class="cite-ref" title="Ituran PR, Oct 28 2025">2</a> If a customer disappears, the car doesn't.</p>
+                </div>
+            </div>
+
+            <!-- Optional press credibility line — GATED, hidden until verified (config) -->
+            <p class="press-credit" id="pressCredit" hidden></p>
+
+            <div class="why-sources" id="why-sources">
+                <ol>
+                    <li>2.6M connected vehicles / 9 markets: Ituran Form 20-F FY2025 (SEC).</li>
+                    <li>80% stolen-vehicle recovery rate and $3B+ recovered since 2006: Ituran press release, Oct 28 2025.</li>
+                    <li>Public listing: NASDAQ: ITRN, 20 years public.</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 5.7 PRICING ========== -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="eyebrow">Pricing</p>
+                <h2>Simple pricing. Two plans.</h2>
+                <p class="pricing-anchor">Fleet GPS tracking alone typically runs $18&ndash;$35 per vehicle, per month.<a href="#pricing-sources" class="cite-ref" title="Published list pricing, July 2026">1</a> mob-connect is $9.99 &mdash; tracking, Remote Starter Disable, and the digital key included.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="price-card featured">
+                    <div class="plan-name">mob-connect</div>
+                    <div class="price">$9.99 <span>/ vehicle / month</span></div>
+                    <div class="device-cost">+ $169.99 device (one-time)</div>
+                    <hr>
+                    <ul class="price-features">
+                        <li>Time-bound digital key link</li>
+                        <li>Live GPS positioning</li>
+                        <li>Remote immobilization</li>
+                        <li>GPS-based odometer</li>
+                        <li>Overspeed alerts</li>
+                        <li>Admin portal</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary price-btn" data-order-cta>Order now &rarr;</a>
+                </div>
+                <div class="price-card">
+                    <div class="plan-name">mob-connect + API</div>
+                    <div class="price">$14.99 <span>/ vehicle / month</span></div>
+                    <div class="device-cost">+ $169.99 device (one-time)</div>
+                    <hr>
+                    <ul class="price-features">
+                        <li class="api-line">Everything in mob-connect, plus:</li>
+                        <li>Full API access</li>
+                        <li>Read data from the device</li>
+                        <li>Send commands to the device</li>
+                        <li>Build custom flows on top</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary price-btn" data-order-cta>Order now &rarr;</a>
+                </div>
+            </div>
+
+            <p class="pricing-friendly">Roll out at your own pace — you're only billed for devices as you install them, in monthly batches.</p>
+
+            <div class="pricing-fine">
+                <ul>
+                    <li>Installation, shipping, and taxes not included.</li>
+                    <li>12-month commitment. Cancel before term: 30% penalty on remaining balance. After 12 months: cancel with 30 days' notice.</li>
+                    <li>Grace period to install: billing ramps in batches of 30 vehicles per month, and the first month is grace. You get time to install before you pay for a device.</li>
+                </ul>
+            </div>
+
+            <div class="why-sources" id="pricing-sources">
+                <ol>
+                    <li>Published list pricing, July 2026: Zubie $17.99, Linxup ~$22.99, Azuga $25&ndash;$35 per vehicle/month.</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 5.8 FAQ ========== -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="eyebrow">FAQ</p>
+                <h2>Frequently asked questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">What's the difference between mob-connect and mob-connect + API? <span class="faq-icon" aria-hidden="true">+</span></button>
+                    <div class="faq-answer"><div class="faq-answer-inner">mob-connect gives you the admin portal and the digital-key link workflow out of the box. mob-connect + API adds full API access so you can integrate with your reservation system or build custom flows.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">How does the customer receive the link? <span class="faq-icon" aria-hidden="true">+</span></button>
+                    <div class="faq-answer"><div class="faq-answer-inner">You send it — email, SMS, WhatsApp, whatever you already use to communicate with your customer. The link is a hyperlink; the customer taps it and unlocks the car. No app install required.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">How long does installation take? <span class="faq-icon" aria-hidden="true">+</span></button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Under two hours per vehicle. We provide remote training and support for your installer. Fleets at our target size typically have a mechanic they already work with.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">What if my customer doesn't return the car? <span class="faq-icon" aria-hidden="true">+</span></button>
+                    <div class="faq-answer"><div class="faq-answer-inner">You can immobilize the vehicle remotely from the admin portal — safely disable the engine start when the car is off. You also have live GPS position.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">Can I keep my current reservation system? <span class="faq-icon" aria-hidden="true">+</span></button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Yes. mob-connect does not replace your reservation system. If you want to integrate the two, mob-connect + API is the path.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">What's the commitment? <span class="faq-icon" aria-hidden="true">+</span></button>
+                    <div class="faq-answer"><div class="faq-answer-inner">12 months. After that, cancel any time with 30 days' notice. See pricing for grace-period details.</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 5.9 BOTTOM CTA ========== -->
+    <section class="bottom-cta">
+        <div class="container">
+            <h2>Ready to run digital?</h2>
+            <p>15-minute demo. See the operator flow live. Zero commitment.</p>
+            <a href="#" class="btn btn-primary btn-lg" data-demo-cta>Book a demo</a>
+        </div>
+    </section>
+
+    <!-- ========== 5.10 FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <img src="assets/logo.png" alt="IturanMob" class="footer-logo">
+                    <p>JV between MobLab and Ituran. 30 years of vehicle-recovery technology, applied to modern fleets.</p>
+                </div>
+                <div>
+                    <h4>Solutions</h4>
+                    <ul>
+                        <li><a href="#how">How it works</a></li>
+                        <li><a href="#control">Total control</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#why">About</a></li>
+                        <li><a href="press.html">Press</a></li>
+                        <li><a href="#" data-demo-cta>Contact</a></li>
+                        <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <p><a href="mailto:salesmob@ituranusa.com">salesmob@ituranusa.com</a></p>
+                    <p>IturanMob USA<br>1700 NW 64th St,<br>Fort Lauderdale, FL 33309</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 IturanMob USA. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== DEMO MODAL (§7 Step 1) ========== -->
+    <div id="demoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="demoModalTitle">
+        <div class="modal-content">
+            <button class="close-modal" aria-label="Close" data-close-modal>&times;</button>
+            <h2 id="demoModalTitle">Book a demo</h2>
+            <p class="modal-intro">Tell us where to reach you. A sales rep will follow up within 24 hours — or book a slot on the next screen.</p>
+            <form id="demoForm" novalidate>
+                <div class="form-field">
+                    <label for="df-email">Email</label>
+                    <input type="email" id="df-email" name="email" required autocomplete="email" placeholder="you@company.com">
+                    <div class="form-error">Please enter a valid email address.</div>
+                </div>
+                <div class="form-field">
+                    <label for="df-phone">Phone <span class="optional">(optional)</span></label>
+                    <input type="tel" id="df-phone" name="phone" autocomplete="tel" placeholder="+1 (555) 000-0000">
+                </div>
+                <div class="form-field">
+                    <label for="df-fleet">Fleet size</label>
+                    <select id="df-fleet" name="fleet_size" required>
+                        <option value="" disabled selected>Select fleet size</option>
+                        <option value="50-100">50–100</option>
+                        <option value="101-500">101–500</option>
+                        <option value="501+">501+</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="form-error">Please select a fleet size.</div>
+                </div>
+                <div class="form-field">
+                    <label for="df-usecase">Primary use case</label>
+                    <select id="df-usecase" name="use_case" required>
+                        <option value="" disabled selected>Select use case</option>
+                        <option value="traditional-rental">Traditional rental</option>
+                        <option value="car-sharing">Car sharing</option>
+                        <option value="gig-platform">Gig platform</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="form-error">Please select a use case.</div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Request demo</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

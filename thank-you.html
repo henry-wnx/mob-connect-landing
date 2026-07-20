@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you | mob-connect</title>
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .ty-section { background: var(--navy-gradient); min-height: 100vh; display: flex; align-items: center; padding: 4rem 0; color: #fff; }
+        .ty-card { max-width: 720px; margin: 0 auto; text-align: center; }
+        .ty-check { width: 72px; height: 72px; color: var(--teal-brand); margin: 0 auto 1.5rem; }
+        .ty-card h1 { color: #fff; margin-bottom: 1rem; }
+        .ty-card > p { color: rgba(255,255,255,0.88); font-size: 1.2rem; margin-bottom: 2.5rem; }
+        .ty-schedule { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 2.5rem; margin-bottom: 2rem; }
+        .ty-schedule h2 { color: #fff; font-size: 1.5rem; }
+        .ty-schedule p { color: rgba(255,255,255,0.82); margin-bottom: 1.5rem; }
+        .calendly-embed { min-height: 640px; width: 100%; border: 0; border-radius: 10px; overflow: hidden; }
+        .ty-fallback { color: rgba(255,255,255,0.8); font-size: 1rem; }
+        .ty-fallback a { color: var(--teal-brand); font-weight: 600; }
+        .ty-home { display: inline-block; margin-top: 2rem; color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+        .ty-home:hover { color: var(--teal-brand); }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo" aria-label="mob-connect home">
+                <img src="assets/logo.png" alt="IturanMob" class="logo-img">
+            </a>
+        </div>
+    </nav>
+
+    <section class="ty-section">
+        <div class="container">
+            <div class="ty-card">
+                <svg class="ty-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+                </svg>
+                <h1>Got it.</h1>
+                <p>A sales rep will reach out within 24 hours.</p>
+
+                <!-- Skip-the-wait scheduling. Calendly is PENDING (brief §7):
+                     rendered only when MOBCONNECT_CONFIG.CALENDLY_URL is set. -->
+                <div class="ty-schedule" id="scheduleBlock" hidden>
+                    <h2>Skip the wait — book a slot now</h2>
+                    <p>Pick a time that works and talk to a rep on your schedule.</p>
+                    <iframe id="calendlyFrame" class="calendly-embed" title="Book a demo slot" src="" loading="lazy"></iframe>
+                </div>
+
+                <p class="ty-fallback">
+                    Prefer email? Reach us directly at
+                    <a id="salesMailto" href="mailto:salesmob@ituranusa.com">salesmob@ituranusa.com</a>.
+                </p>
+
+                <a href="index.html" class="ty-home">&larr; Back to home</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="config.js"></script>
+    <script>
+        (function () {
+            var CFG = window.MOBCONNECT_CONFIG || {};
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ event: "thank_you_view" });
+
+            // Wire mailto fallback from config.
+            var mailto = document.getElementById("salesMailto");
+            if (CFG.SALES_EMAIL && mailto) {
+                mailto.href = "mailto:" + CFG.SALES_EMAIL;
+                mailto.textContent = CFG.SALES_EMAIL;
+            }
+
+            // Calendly: show embed only when a real URL is configured (brief §7).
+            if (CFG.CALENDLY_URL) {
+                var block = document.getElementById("scheduleBlock");
+                var frame = document.getElementById("calendlyFrame");
+                frame.src = CFG.CALENDLY_URL;
+                block.hidden = false;
+                window.dataLayer.push({ event: "calendly_shown" });
+                // Note: to also fire a 'calendly_slot_booked' analytics event,
+                // load Calendly's widget.js and listen for its postMessage events
+                // once the real URL is provided.
+            }
+        })();
+    </script>
+</body>
+</html>

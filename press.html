@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press &amp; Media | mob-connect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .press-hero { background: var(--navy-gradient); color: #fff; padding: 5rem 0 4rem; text-align: center; }
+        .press-hero h1 { color: #fff; }
+        .press-hero p { color: rgba(255,255,255,0.82); font-size: 1.2rem; max-width: 680px; margin: 0 auto; }
+        .press-back { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 1rem; display: inline-block; }
+        .press-back:hover { color: var(--teal-brand); }
+        .press-feed { padding: 4rem 0; background-color: var(--gray-light); }
+        .press-empty { max-width: 640px; margin: 0 auto; text-align: center; }
+        .press-empty p { color: var(--gray-medium); font-size: 1.1rem; margin-bottom: 2rem; }
+        .press-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+        .press-card { background: #fff; border: 1px solid var(--border-color); border-radius: 10px; padding: 2rem; transition: all 0.25s; }
+        .press-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.08); transform: translateY(-3px); }
+        .press-card.featured { grid-column: 1 / -1; border-left: 5px solid var(--teal-brand); padding: 2.5rem; }
+        .press-meta { font-size: 0.82rem; color: var(--gray-medium); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 0.9rem; }
+        .press-card h3 { font-size: 1.35rem; margin-bottom: 0.85rem; }
+        .press-card.featured h3 { font-size: 1.75rem; }
+        .press-card p { color: var(--gray-medium); font-size: 0.98rem; }
+        .read-more { display: inline-block; margin-top: 1rem; color: var(--teal-deep); font-weight: 600; font-size: 0.95rem; }
+        @media (max-width: 680px) { .press-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo" aria-label="mob-connect home">
+                <img src="assets/logo.png" alt="IturanMob" class="logo-img">
+            </a>
+            <button class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">&#9776;</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#problem">The problem</a></li>
+                <li><a href="index.html#how">How it works</a></li>
+                <li><a href="index.html#control">Control</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="press.html" class="text-teal">Press</a></li>
+                <li><a href="index.html#pricing" class="btn btn-primary">Book a demo</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="press-hero">
+        <div class="container">
+            <a href="index.html" class="press-back">&larr; Back to home</a>
+            <h1>In the News</h1>
+            <p>Coverage of Ituran and IturanMob's work in fleet security and digital vehicle access.</p>
+        </div>
+    </header>
+
+    <section class="press-feed">
+        <div class="container">
+            <!-- Article feed is GATED (brief §10 #2): renders only when
+                 PRESS_ARTICLES_ENABLED is true and quotes are verified.
+                 Until then, the neutral placeholder below shows. -->
+            <div class="press-empty" id="pressEmpty">
+                <p>Press coverage is being compiled and verified. Check back soon — or get in touch and we'll share the latest.</p>
+                <a href="index.html#pricing" class="btn btn-primary">Book a demo</a>
+            </div>
+            <div id="pressFeed" hidden></div>
+            <div style="text-align:center; margin-top:3rem;">
+                <a href="index.html" class="btn btn-secondary">&larr; Back to home</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <img src="assets/logo.png" alt="IturanMob" class="footer-logo">
+                    <p>JV between MobLab and Ituran. 30 years of vehicle-recovery technology, applied to modern fleets.</p>
+                </div>
+                <div>
+                    <h4>Solutions</h4>
+                    <ul>
+                        <li><a href="index.html#how">How it works</a></li>
+                        <li><a href="index.html#control">Total control</a></li>
+                        <li><a href="index.html#pricing">Pricing</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="index.html#why">About</a></li>
+                        <li><a href="press.html">Press</a></li>
+                        <li><a href="index.html#pricing">Contact</a></li>
+                        <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <p><a href="mailto:salesmob@ituranusa.com">salesmob@ituranusa.com</a></p>
+                    <p>IturanMob USA<br>1700 NW 64th St,<br>Fort Lauderdale, FL 33309</p>
+                </div>
+            </div>
+            <div class="copyright">&copy; 2026 IturanMob USA. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script>
+        (function () {
+            var CFG = window.MOBCONNECT_CONFIG || {};
+            // Mobile nav
+            var toggle = document.querySelector(".mobile-toggle");
+            var navMenu = document.getElementById("navMenu");
+            if (toggle && navMenu) {
+                toggle.addEventListener("click", function () {
+                    var open = navMenu.classList.toggle("open");
+                    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+                });
+            }
+            // Gated press feed
+            if (CFG.PRESS_ARTICLES_ENABLED && Array.isArray(CFG.PRESS_ARTICLES) && CFG.PRESS_ARTICLES.length) {
+                var feed = document.getElementById("pressFeed");
+                var grid = document.createElement("div");
+                grid.className = "press-grid";
+                CFG.PRESS_ARTICLES.forEach(function (a) {
+                    var card = document.createElement("div");
+                    card.className = "press-card" + (a.featured ? " featured" : "");
+                    var link = a.url ? '<a href="' + a.url + '" target="_blank" rel="noopener" class="read-more">Read article &rarr;</a>' : "";
+                    card.innerHTML =
+                        '<div class="press-meta">' + a.outlet + '</div>' +
+                        '<h3>' + a.headline + '</h3>' +
+                        '<p>' + a.blurb + '</p>' + link;
+                    grid.appendChild(card);
+                });
+                feed.appendChild(grid);
+                feed.hidden = false;
+                document.getElementById("pressEmpty").hidden = true;
+            }
+        })();
+    </script>
+</body>
+</html>
