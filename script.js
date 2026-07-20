@@ -60,6 +60,27 @@
       if (slot) slot.hidden = false;
     }
 
+    /* ---------- Porsche Cup trust video (brief §5.6) ----------
+       Click-to-play only: film has sound, so no autoplay. preload="none"
+       keeps the 14MB file off the initial pageload. Controls appear
+       after start; analytics fires once on first play. */
+    var porscheVideo = document.getElementById("porscheVideo");
+    var porschePlay = document.getElementById("porschePlay");
+    if (porscheVideo && porschePlay) {
+      var porscheTracked = false;
+      porschePlay.addEventListener("click", function () {
+        porschePlay.hidden = true;
+        porscheVideo.setAttribute("controls", "");
+        porscheVideo.play();
+      });
+      porscheVideo.addEventListener("play", function () {
+        if (!porscheTracked) {
+          porscheTracked = true;
+          track("porsche_video_play");
+        }
+      });
+    }
+
     /* ---------- FAQ accordion (expand on click) ---------- */
     document.querySelectorAll(".faq-question").forEach(function (btn) {
       btn.addEventListener("click", function () {
