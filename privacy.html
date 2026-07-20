@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     DRAFT — requires legal review before launch.
+     Plain-language privacy policy scoped to what this site actually
+     does today: demo-form lead capture + (gated) GA4 analytics.
+     Do not publish as final without counsel sign-off.
+     ============================================================ -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy policy | mob-connect</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .privacy-section { padding: 4.5rem 0 5.5rem; background: var(--white); }
+        .privacy-wrap { max-width: 760px; margin: 0 auto; }
+        .privacy-wrap h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .privacy-updated { color: var(--gray-medium); font-size: 0.9rem; margin-bottom: 2.5rem; }
+        .privacy-wrap h2 { font-size: 1.25rem; margin: 2.25rem 0 0.75rem; }
+        .privacy-wrap p, .privacy-wrap li { color: var(--gray-dark); font-size: 1rem; line-height: 1.65; }
+        .privacy-wrap ul { list-style: disc; padding-left: 1.4rem; margin: 0.5rem 0 1rem; }
+        .privacy-wrap a { color: var(--teal-deep); font-weight: 600; }
+        .privacy-wrap a:hover { text-decoration: underline; }
+        .privacy-back { display: inline-block; margin-top: 3rem; color: var(--gray-medium); font-size: 0.95rem; }
+        .privacy-back:hover { color: var(--teal-deep); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo" aria-label="mob-connect home">
+                <img src="assets/logo.png" alt="IturanMob" class="logo-img">
+            </a>
+            <button class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">&#9776;</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#problem">Why digital</a></li>
+                <li><a href="index.html#how">How it works</a></li>
+                <li><a href="index.html#control">Fleet control</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="privacy-section">
+        <div class="container">
+            <div class="privacy-wrap">
+                <h1>Privacy policy</h1>
+                <p class="privacy-updated">Draft — last updated July 20, 2026. Pending legal review.</p>
+
+                <p>This page explains, in plain language, what information this website collects and what we do with it. "We" means IturanMob USA.</p>
+
+                <h2>What we collect</h2>
+                <p>The only personal information this site collects is what you type into the demo request form:</p>
+                <ul>
+                    <li>Email address</li>
+                    <li>Phone number (optional)</li>
+                    <li>Fleet size</li>
+                    <li>Primary use case</li>
+                </ul>
+                <p>If you never submit the form, we collect no personal information from you on this site.</p>
+
+                <h2>Why we collect it</h2>
+                <p>For one purpose: so our sales team can contact you about mob-connect. That's what you're asking for when you request a demo, and that's what we use it for.</p>
+
+                <h2>What we don't do</h2>
+                <p>We do not sell your personal information. We do not share it with third parties for their own marketing.</p>
+
+                <h2>Cookies and analytics</h2>
+                <p>This site may use Google Analytics 4 to understand how visitors use the page (for example, which sections are read and which buttons are clicked). When enabled, Google Analytics sets cookies and collects usage data under Google's own policies. We use this data in aggregate only — to improve the site, not to identify you.</p>
+
+                <h2>Deleting your information</h2>
+                <p>Want your information removed? Email us at <a href="mailto:salesmob@ituranusa.com">salesmob@ituranusa.com</a> and we will delete it.</p>
+
+                <h2>Contact</h2>
+                <p>IturanMob USA<br>1700 NW 64th St, Fort Lauderdale, FL 33309<br><a href="mailto:salesmob@ituranusa.com">salesmob@ituranusa.com</a></p>
+
+                <a class="privacy-back" href="index.html">&larr; Back to home</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="copyright">
+                &copy; 2026 IturanMob USA. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script>
+        // Minimal nav toggle (privacy page loads no page-specific behavior).
+        (function () {
+            var toggle = document.querySelector(".mobile-toggle");
+            var navMenu = document.getElementById("navMenu");
+            if (toggle && navMenu) {
+                toggle.addEventListener("click", function () {
+                    var open = navMenu.classList.toggle("open");
+                    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

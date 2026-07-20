@@ -21,25 +21,11 @@ window.MOBCONNECT_CONFIG = {
      Calendly embed stays hidden. Dropping in the URL is the only change. */
   CALENDLY_URL: "",                      // e.g. "https://calendly.com/ituranmob/demo"
 
-  /* --- Press credibility line (brief §5.6 / §10 open item #2 — GATED) --
-     Do NOT enable until old-site press quotes are verified as real and
-     about Ituran. When verified, set PRESS_CREDIT_ENABLED = true. ------ */
-  PRESS_CREDIT_ENABLED: false,
-  PRESS_CREDIT_TEXT: "As covered by Barron's and AutoBlog.",
-
-  /* --- Press page article feed (brief §10 open item #2 — GATED) --------
-     The old site's press.html carried these quotes/links. Per §10 they are
-     UNVERIFIED — provenance (real, and about Ituran) must be confirmed
-     before publishing. Until PRESS_ARTICLES_ENABLED = true, press.html
-     renders a neutral "coverage being compiled" state and NONE of these
-     render. When each item is verified, flip the flag to true. Do not add
-     any quote here that has not been confirmed real. ------------------- */
-  PRESS_ARTICLES_ENABLED: false,
-  PRESS_ARTICLES: [
-    { outlet: "Barron's", featured: true, headline: "This Small-Cap Is Stopping Car Theft.", blurb: "Coverage of Ituran's expansion into new markets and the launch of the IturanMob platform.", url: "" },
-    { outlet: "The Weekend Drive", headline: "Small Rental Fleets Have Been Stuck In The Stone Age. Ituran Says That's About To End.", blurb: "How IturanMob is democratizing technology previously available only to the largest fleets.", url: "" },
-    { outlet: "AutoBlog", headline: "How Ituran's tech is changing the math on stolen vehicle recovery", blurb: "The shift from passive tracking to active prevention and recovery.", url: "" }
-  ],
+  /* --- Canonical site URL (GitHub Pages for now) -----------------------
+     Single source for the deploy origin. NOTE: the og:url / og:image tags
+     in index.html are hardcoded (crawlers don't execute JS) — if this
+     changes, update those tags to match. ------------------------------- */
+  SITE_URL: "https://henry-wnx.github.io/mob-connect-landing/",
 
   /* --- Contact --------------------------------------------------------- */
   SALES_EMAIL: "salesmob@ituranusa.com",

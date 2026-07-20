@@ -80,7 +80,9 @@ ul { list-style: none; }
 
 /* ========== HERO ========== */
 .hero {
-    position: relative; min-height: 82vh; display: flex; align-items: center; justify-content: center;
+    /* Tightened (Lena review): cap the vh-driven height so the content block
+       stays vertically centered without a band of dead space below it. */
+    position: relative; min-height: min(82vh, 700px); display: flex; align-items: center; justify-content: center;
     background-color: var(--navy-brand); overflow: hidden; color: var(--white); padding: 4rem 0;
 }
 .hero-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
@@ -125,17 +127,18 @@ ul { list-style: none; }
 .step-item h4 { font-size: 1.12rem; margin-bottom: 0.25rem; color: var(--navy-brand); }
 .step-item p { font-size: 0.97rem; color: var(--gray-medium); margin: 0; }
 .how-callout {
-    margin-top: 2.5rem; background: var(--white); border-left: 4px solid var(--teal-brand);
-    padding: 1.4rem 1.6rem; border-radius: 8px; font-size: 1rem; color: var(--gray-dark); font-style: italic;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    /* Full-width band under both columns (Lena review, B1) */
+    margin-top: 3rem; background: var(--white); border-left: 4px solid var(--teal-brand);
+    padding: 1.4rem 1.6rem; border-radius: 8px; font-size: 1.05rem; color: var(--gray-dark); font-style: italic;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04); text-align: center;
 }
-.how-visual { display: flex; flex-direction: column; gap: 1.5rem; }
+.how-visual { display: flex; flex-direction: column; gap: 1.25rem; }
 .architecture-wrapper {
-    background: var(--navy-gradient); border-radius: 12px; padding: 1.5rem;
+    background: var(--navy-gradient); border-radius: 12px; padding: 1rem;
     box-shadow: 0 18px 40px rgba(12,28,51,0.15); display: flex; align-items: center; justify-content: center;
 }
-.architecture-img { width: 100%; max-width: 100%; height: auto; display: block; border-radius: 6px; }
-.arch-caption { text-align: center; font-size: 0.85rem; color: var(--gray-medium); margin-top: -0.5rem; }
+.architecture-img { width: 100%; max-width: 100%; height: auto; max-height: 420px; object-fit: cover; display: block; border-radius: 6px; }
+.arch-caption { text-align: center; font-size: 0.85rem; color: var(--gray-medium); margin: -0.25rem 0 0; }
 .api-upsell {
     background: var(--navy-brand); color: rgba(255,255,255,0.85); border-radius: 12px; padding: 1.75rem;
     border: 1px solid rgba(93,191,189,0.35); border-left: 4px solid var(--teal-brand);
@@ -166,13 +169,13 @@ ul { list-style: none; }
 .control-callout span { color: var(--teal-brand); }
 
 /* ========== TRUSTED BY (§5.5 — removable, data-driven block) ========== */
-.trusted-section { padding: 4.5rem 0; background-color: var(--navy-brand); border-top: 1px solid rgba(255,255,255,0.06); }
-.trusted-heading { text-align: center; color: var(--white); font-size: 1.6rem; margin-bottom: 2.5rem; }
+.trusted-section { padding: 6rem 0; background-color: var(--navy-brand); border-top: 1px solid rgba(255,255,255,0.06); }
+.trusted-heading { text-align: center; color: var(--white); font-size: 1.6rem; margin-bottom: 3rem; }
 .trusted-logos {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 3.5rem;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 3rem 5rem;
 }
 .trusted-logos img {
-    height: 38px; width: auto; max-width: 160px; object-fit: contain;
+    height: 52px; width: auto; max-width: 210px; object-fit: contain;
     opacity: 0.85; transition: opacity 0.25s;
 }
 .trusted-logos img:hover { opacity: 1; }
@@ -196,7 +199,6 @@ ul { list-style: none; }
 .why-sources { margin-top: 3.5rem; padding-top: 1.75rem; border-top: 1px solid var(--border-color); }
 .why-sources ol { list-style: decimal; padding-left: 1.25rem; max-width: 900px; margin: 0 auto; }
 .why-sources li { font-size: 0.82rem; color: var(--gray-medium); margin-bottom: 0.4rem; line-height: 1.4; }
-.press-credit { text-align: center; margin-top: 2.5rem; font-size: 0.95rem; color: var(--gray-medium); font-style: italic; }
 
 /* ========== PRICING ========== */
 .pricing-section { padding: 6rem 0; background-color: var(--gray-bg-alt); }
@@ -300,7 +302,7 @@ ul { list-style: none; }
 }
 @media (max-width: 680px) {
     .container { padding: 0 1.25rem; }
-    .hero { min-height: 78vh; }
+    .hero { min-height: 0; }
     .hero-content p { font-size: 1.1rem; }
     .problem-grid { grid-template-columns: 1fr; }
     .control-grid { grid-template-columns: 1fr; }

@@ -60,12 +60,6 @@
       if (slot) slot.hidden = false;
     }
 
-    /* ---------- Press credibility line (GATED, brief §5.6/§10) ---------- */
-    if (CFG.PRESS_CREDIT_ENABLED && CFG.PRESS_CREDIT_TEXT) {
-      var pc = document.getElementById("pressCredit");
-      if (pc) { pc.textContent = CFG.PRESS_CREDIT_TEXT; pc.hidden = false; }
-    }
-
     /* ---------- FAQ accordion (expand on click) ---------- */
     document.querySelectorAll(".faq-question").forEach(function (btn) {
       btn.addEventListener("click", function () {
