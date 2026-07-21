@@ -524,17 +524,22 @@
         </div>
     </footer>
 
-    <!-- ========== LEAD MODAL (§7 — shared by demo / pilot / full-solution flows) ==========
-         Field rules (brief §7): Name + Phone mandatory, everything else optional.
-         Hidden lead_type: demo | pilot | full-solution, set by the opening CTA.
-         use_case pre-filled when opened from a tagged section (e.g. Turo). -->
+    <!-- ========== CALLBACK MODAL (§7 MVP callback model — one shared modal) ==========
+         Lead collection only at launch: every CTA opens this modal, the lead
+         picks when sales calls them. Mandatory: Name, Phone, Best time to call
+         (date min tomorrow + time window + timezone). Optional: Company, Fleet
+         size, Notes. Hidden lead_type: demo | pilot | full-solution; hidden
+         use_case pre-tagged from the Turo section. Timezone auto-detected from
+         the browser, editable. Order redirect + cookie handoff DORMANT (phase 2,
+         config ORDER_FLOW_ENABLED). -->
     <div id="leadModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
         <div class="modal-content">
             <button class="close-modal" aria-label="Close" data-close-modal>&times;</button>
             <h2 id="leadModalTitle">Book a demo</h2>
-            <p class="modal-intro" id="leadModalIntro">Tell us where to reach you. A sales rep will follow up within 24 hours, or book a slot on the next screen.</p>
+            <p class="modal-intro" id="leadModalIntro">Tell us when to call you. The demo takes 15 minutes.</p>
             <form id="leadForm" novalidate>
                 <input type="hidden" name="lead_type" value="demo">
+                <input type="hidden" name="use_case" value="">
                 <div class="form-field">
                     <label for="lf-name">Name</label>
                     <input type="text" id="lf-name" name="name" required autocomplete="name" placeholder="Your name">
@@ -546,9 +551,38 @@
                     <div class="form-error">Please enter a valid phone number.</div>
                 </div>
                 <div class="form-field">
-                    <label for="lf-email">Email <span class="optional">(optional)</span></label>
-                    <input type="email" id="lf-email" name="email" autocomplete="email" placeholder="you@company.com">
-                    <div class="form-error">Please enter a valid email address.</div>
+                    <label for="lf-date">Best time to call</label>
+                    <input type="date" id="lf-date" name="call_date" required>
+                    <div class="form-error">Please pick a date from tomorrow on.</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="lf-window">Time window</label>
+                        <select id="lf-window" name="call_window" required>
+                            <option value="" disabled selected>Select window</option>
+                            <option value="9-11am">9-11am</option>
+                            <option value="11am-1pm">11am-1pm</option>
+                            <option value="1-3pm">1-3pm</option>
+                            <option value="3-5pm">3-5pm</option>
+                        </select>
+                        <div class="form-error">Please pick a time window.</div>
+                    </div>
+                    <div class="form-field">
+                        <label for="lf-timezone">Time zone</label>
+                        <select id="lf-timezone" name="call_timezone" required>
+                            <option value="" disabled selected>Select time zone</option>
+                            <option value="ET">ET</option>
+                            <option value="CT">CT</option>
+                            <option value="MT">MT</option>
+                            <option value="PT">PT</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="form-error">Please pick a time zone.</div>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="lf-company">Company <span class="optional">(optional)</span></label>
+                    <input type="text" id="lf-company" name="company" autocomplete="organization" placeholder="Your company">
                 </div>
                 <div class="form-field">
                     <label for="lf-fleet">Fleet size <span class="optional">(optional)</span></label>
@@ -561,17 +595,10 @@
                     </select>
                 </div>
                 <div class="form-field">
-                    <label for="lf-usecase">Primary use case <span class="optional">(optional)</span></label>
-                    <select id="lf-usecase" name="use_case">
-                        <option value="" selected>Select use case</option>
-                        <option value="traditional-rental">Traditional rental</option>
-                        <option value="car-sharing">Car sharing</option>
-                        <option value="gig-platform">Gig platform</option>
-                        <option value="turo-fleet">Turo fleet</option>
-                        <option value="other">Other</option>
-                    </select>
+                    <label for="lf-notes">Questions or anything we should know? <span class="optional">(optional)</span></label>
+                    <textarea id="lf-notes" name="notes" rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary" id="leadSubmitBtn" style="width:100%;">Request demo</button>
+                <button type="submit" class="btn btn-primary" id="leadSubmitBtn" style="width:100%;">Request my call</button>
             </form>
         </div>
     </div>

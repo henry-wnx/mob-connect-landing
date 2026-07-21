@@ -382,13 +382,16 @@ ul { list-style: none; }
 .form-field { margin-bottom: 1.1rem; }
 .form-field label { display: block; margin-bottom: 0.45rem; font-weight: 600; font-size: 0.92rem; color: var(--gray-dark); }
 .form-field .optional { font-weight: 400; color: var(--gray-medium); font-size: 0.85em; }
-.form-field input, .form-field select {
+.form-field input, .form-field select, .form-field textarea {
     width: 100%; padding: 0.8rem; border: 1px solid #c7cdd4; border-radius: 6px; font-size: 1rem; font-family: inherit; color: var(--gray-dark); background: #fff;
 }
-.form-field input:focus, .form-field select:focus { border-color: var(--teal-brand); outline: none; box-shadow: 0 0 0 3px rgba(93,191,189,0.25); }
+.form-field textarea { resize: vertical; min-height: 72px; }
+.form-field input[type="date"] { min-height: 48px; } /* iOS date inputs collapse without a height floor */
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--teal-brand); outline: none; box-shadow: 0 0 0 3px rgba(93,191,189,0.25); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .form-error { color: #c0392b; font-size: 0.85rem; margin-top: 0.4rem; display: none; }
 .form-field.invalid .form-error { display: block; }
-.form-field.invalid input, .form-field.invalid select { border-color: #c0392b; }
+.form-field.invalid input, .form-field.invalid select, .form-field.invalid textarea { border-color: #c0392b; }
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 980px) {
@@ -433,6 +436,7 @@ ul { list-style: none; }
     .bottom-cta h2 { font-size: 2rem; }
     .hero-btns .btn { width: 100%; }
     .modal-content { padding: 2rem 1.5rem; }
+    .form-row { grid-template-columns: 1fr; gap: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

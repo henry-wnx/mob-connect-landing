@@ -101,9 +101,11 @@
       });
     });
 
-    /* ---------- Lead modal (brief §7 — shared by demo / pilot / full-solution) ----------
-       One modal, one form. The opening CTA sets the hidden lead_type, the
-       title/intro/submit label, and (Turo section) a use_case pre-fill. */
+    /* ---------- Callback modal (brief §7 MVP callback model) ----------
+       One shared modal for every CTA: the lead picks when sales calls
+       them. The opening CTA sets the hidden lead_type, the title/intro,
+       and (Turo section) a hidden use_case pre-tag. CTA labels stay
+       unchanged; only the behavior converges here. */
     var modal = document.getElementById("leadModal");
     var form = document.getElementById("leadForm");
     var lastFocused = null;
@@ -111,28 +113,57 @@
     var MODAL_PRESETS = {
       "demo": {
         title: "Book a demo",
-        intro: "Tell us where to reach you. A sales rep will follow up within 24 hours, or book a slot on the next screen.",
-        button: "Request demo"
+        intro: "Tell us when to call you. The demo takes 15 minutes."
       },
       "pilot": {
         title: "Start your pilot",
-        intro: "Tell us where to reach you, then continue straight to the order page.",
-        button: "Continue to order"
+        intro: "Tell us when to call you. We'll set up your pilot on that call."
       },
       "full-solution": {
         title: "Schedule a meeting",
-        intro: "Tell us where to reach you. We'll reach out to scope your project.",
-        button: "Schedule a meeting"
+        intro: "Tell us when to call you. We'll scope your project on that call."
       }
     };
+
+    /* Best-time-to-call date: native date input, min = tomorrow (local). */
+    function localISODate(d) {
+      return d.getFullYear() + "-" +
+        String(d.getMonth() + 1).padStart(2, "0") + "-" +
+        String(d.getDate()).padStart(2, "0");
+    }
+    function minCallDate() {
+      var t = new Date();
+      t.setDate(t.getDate() + 1);
+      return localISODate(t);
+    }
+
+    /* Timezone auto-detect (brief §7): browser IANA zone mapped to
+       ET/CT/MT/PT when possible; anything unmapped falls back to "other".
+       Always editable by the user. */
+    var TZ_MAP = {
+      "America/New_York": "ET", "America/Detroit": "ET", "America/Toronto": "ET",
+      "America/Montreal": "ET", "America/Indiana/Indianapolis": "ET", "America/Kentucky/Louisville": "ET",
+      "America/Chicago": "CT", "America/Winnipeg": "CT",
+      "America/Denver": "MT", "America/Edmonton": "MT", "America/Boise": "MT", "America/Phoenix": "MT",
+      "America/Los_Angeles": "PT", "America/Vancouver": "PT", "America/Tijuana": "PT"
+    };
+    function detectTimezone() {
+      try {
+        var iana = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+        return TZ_MAP[iana] || "other";
+      } catch (err) {
+        return "other";
+      }
+    }
 
     function openModal(leadType, useCase) {
       var preset = MODAL_PRESETS[leadType] || MODAL_PRESETS.demo;
       document.getElementById("leadModalTitle").textContent = preset.title;
       document.getElementById("leadModalIntro").textContent = preset.intro;
-      document.getElementById("leadSubmitBtn").textContent = preset.button;
       form.lead_type.value = leadType;
-      if (useCase) form.use_case.value = useCase; // pre-fill from tagged sections (e.g. Turo)
+      form.use_case.value = useCase || ""; // hidden pre-tag from tagged sections (e.g. Turo)
+      document.getElementById("lf-date").min = minCallDate();
+      if (!form.call_timezone.value) form.call_timezone.value = detectTimezone();
       lastFocused = document.activeElement;
       modal.classList.add("active");
       document.body.style.overflow = "hidden";
@@ -166,9 +197,10 @@
       if (e.key === "Escape" && modal.classList.contains("active")) closeModal();
     });
 
-    /* ---------- Lead form submit (brief §7) ----------
-       Mandatory: Name + Phone. Optional: email (format-checked only when
-       filled), fleet size, use case. Flow branches on lead_type. */
+    /* ---------- Callback form submit (brief §7 MVP callback model) ----------
+       Mandatory: Name, Phone, Best time to call (date >= tomorrow, time
+       window, timezone). Optional: company, fleet size, notes. All lead
+       types share one flow: POST -> sessionStorage slot -> thank-you. */
     function setInvalid(field, bad) {
       var wrap = field.closest(".form-field");
       if (wrap) wrap.classList.toggle("invalid", bad);
@@ -178,53 +210,73 @@
       // form.name is the form's own name attribute, so fields are fetched via elements.
       var name = form.elements.namedItem("name");
       var phone = form.elements.namedItem("phone");
-      var email = form.elements.namedItem("email");
+      var date = form.elements.namedItem("call_date");
+      var windowSel = form.elements.namedItem("call_window");
+      var tz = form.elements.namedItem("call_timezone");
 
       var nameOk = !!name.value.trim();
       var phoneOk = (phone.value.replace(/\D/g, "").length >= 7);
-      var emailOk = !email.value.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+      var dateOk = !!date.value && date.value >= minCallDate(); // ISO dates compare lexicographically
+      var windowOk = !!windowSel.value;
+      var tzOk = !!tz.value;
       setInvalid(name, !nameOk);
       setInvalid(phone, !phoneOk);
-      setInvalid(email, !emailOk);
-      if (!nameOk || !phoneOk || !emailOk) return;
+      setInvalid(date, !dateOk);
+      setInvalid(windowSel, !windowOk);
+      setInvalid(tz, !tzOk);
+      if (!nameOk || !phoneOk || !dateOk || !windowOk || !tzOk) return;
 
       var lead = {
         name: name.value.trim(),
         phone: phone.value.trim(),
-        email: email.value.trim(),
+        call_date: date.value,
+        call_window: windowSel.value,
+        call_timezone: tz.value,
+        company: form.company.value.trim(),
         fleet_size: form.fleet_size.value,
+        notes: form.notes.value.trim(),
         use_case: form.use_case.value,
         lead_type: form.lead_type.value,
         source: "mob-connect-landing"
       };
 
-      var SUBMIT_EVENTS = { "demo": "demo_form_submit", "pilot": "pilot_form_submit", "full-solution": "fullsolution_form_submit" };
-      track(SUBMIT_EVENTS[lead.lead_type] || "demo_form_submit", {
-        lead_type: lead.lead_type, fleet_size: lead.fleet_size, use_case: lead.use_case
+      track("callback_request_submit", {
+        lead_type: lead.lead_type, fleet_size: lead.fleet_size, use_case: lead.use_case,
+        call_window: lead.call_window, call_timezone: lead.call_timezone
       });
 
       submitLead(lead).then(function () {
-        if (lead.lead_type === "pilot") {
-          // Checkout pre-fill handoff (brief §7 modal 2): first-party cookie
-          // scoped to .ituranmobusa.com. NEVER in the redirect URL. On
-          // github.io the hostname can't set that cookie: skip silently.
+        /* ---- DORMANT: phase-2 order flow (brief §7 MVP callback model).
+           Do NOT delete. Re-enable via ORDER_FLOW_ENABLED in config.js:
+           pilot leads then get the cookie handoff + order-page redirect. */
+        if (CFG.ORDER_FLOW_ENABLED && lead.lead_type === "pilot") {
           setHandoffCookie(lead);
           window.location.href = CFG.ORDER_URL; // same tab, per brief
-        } else if (lead.lead_type === "full-solution") {
-          window.location.href = "thank-you.html?variant=full-solution";
-        } else {
-          window.location.href = "thank-you.html";
+          return;
         }
+        // Callback slot for the thank-you message: same-origin
+        // sessionStorage, NEVER URL params (no personal data in query strings).
+        try {
+          sessionStorage.setItem("mobconnect_callback", JSON.stringify({
+            date: lead.call_date, window: lead.call_window, timezone: lead.call_timezone
+          }));
+        } catch (err) { /* private mode etc: thank-you falls back to generic copy */ }
+        window.location.href = "thank-you.html";
       });
     });
 
-    /* ---------- Cookie handoff (brief §7 — pilot flow only) ---------- */
+    /* ---------- Cookie handoff — DORMANT, phase 2 (brief §7) ----------
+       Do NOT delete. Gated behind CFG.ORDER_FLOW_ENABLED above. When the
+       order flow returns: first-party cookie scoped to .ituranmobusa.com,
+       read by order.ituranmobusa.com to pre-populate checkout. Only set
+       when served from an ituranmobusa.com hostname; skipped silently
+       elsewhere. Fields NEVER go in the redirect URL. ------------------- */
     function setHandoffCookie(lead) {
       var h = window.location.hostname;
       var onDomain = (h === "ituranmobusa.com") || /\.ituranmobusa\.com$/.test(h);
-      if (!onDomain) return; // github.io etc: skip silently, still redirect
+      if (!onDomain) return;
       var payload = {
-        name: lead.name, phone: lead.phone, email: lead.email,
+        name: lead.name, phone: lead.phone,
         fleet_size: lead.fleet_size, use_case: lead.use_case
       };
       document.cookie = "mobconnect_lead=" + encodeURIComponent(JSON.stringify(payload)) +

@@ -17,25 +17,29 @@ window.MOBCONNECT_CONFIG = {
      Zoho integration = phase 2: swap this endpoint, page untouched. ---- */
   FORM_ENDPOINT: "",                     // PLACEHOLDER — paste the Formspree/Web3Forms URL here
 
-  /* --- Calendly (brief §7 — PENDING, user to provide) -----------------
-     Leave empty until the real scheduling URL is supplied. Empty string
-     => thank-you page renders confirmation + mailto fallback only, and the
-     Calendly embed stays hidden. Dropping in the URL is the only change. */
-  CALENDLY_URL: "",                      // e.g. "https://calendly.com/ituranmob/demo"
+  /* --- Calendly — PHASE 2, dormant (brief §7 MVP callback model) -------
+     The MVP is callback-only: no Calendly on the thank-you page. The
+     embed scaffolding was removed from thank-you.html; if the callback
+     model underperforms, restore it there and uncomment this constant. */
+  // CALENDLY_URL: "",                   // PHASE 2 — e.g. "https://calendly.com/ituranmob/demo"
 
   /* --- Canonical site URL (custom domain LIVE, 2026-07-21) -------------
      Single source for the deploy origin: connect.ituranmobusa.com,
      served by GitHub Pages via the CNAME file in the repo root (DNS
      CNAME record -> henry-wnx.github.io). HTTPS enforced. The hardcoded
      og:url / og:image tags in index.html must stay in sync with this
-     value (crawlers don't execute JS). The .ituranmobusa.com cookie
-     handoff in script.js is active on this hostname. ------------------- */
+     value (crawlers don't execute JS). ---------------------------------- */
   SITE_URL: "https://connect.ituranmobusa.com/",
 
   /* --- Contact --------------------------------------------------------- */
   SALES_EMAIL: "salesmob@ituranusa.com",
 
-  /* --- Direct order destination (brief §5.7 secondary flow) ------------ */
+  /* --- Order flow — PHASE 2, dormant (brief §7 MVP callback model) -----
+     The site is lead collection only at launch: NO CTA routes to the
+     order page. Set ORDER_FLOW_ENABLED to true in phase 2 to restore the
+     pilot flow's cookie handoff + redirect to ORDER_URL (code paths kept
+     intact in script.js — do not delete them). ------------------------- */
+  ORDER_FLOW_ENABLED: false,
   ORDER_URL: "https://order.ituranmobusa.com/mob-connect",
 
   /* --- Trusted-by logo strip (brief §5.5 — data-driven, removable) -----

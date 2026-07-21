@@ -15,10 +15,6 @@
         .ty-check { width: 72px; height: 72px; color: var(--teal-brand); margin: 0 auto 1.5rem; }
         .ty-card h1 { color: #fff; margin-bottom: 1rem; }
         .ty-card > p { color: rgba(255,255,255,0.88); font-size: 1.2rem; margin-bottom: 2.5rem; }
-        .ty-schedule { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 2.5rem; margin-bottom: 2rem; }
-        .ty-schedule h2 { color: #fff; font-size: 1.5rem; }
-        .ty-schedule p { color: rgba(255,255,255,0.82); margin-bottom: 1.5rem; }
-        .calendly-embed { min-height: 640px; width: 100%; border: 0; border-radius: 10px; overflow: hidden; }
         .ty-fallback { color: rgba(255,255,255,0.8); font-size: 1rem; }
         .ty-fallback a { color: var(--teal-brand); font-weight: 600; }
         .ty-home { display: inline-block; margin-top: 2rem; color: rgba(255,255,255,0.7); font-size: 0.95rem; }
@@ -41,15 +37,11 @@
                     <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
                 </svg>
                 <h1>Got it.</h1>
-                <p id="tyMessage">A sales rep will reach out within 24 hours.</p>
-
-                <!-- Skip-the-wait scheduling. Calendly is PENDING (brief §7):
-                     rendered only when MOBCONNECT_CONFIG.CALENDLY_URL is set. -->
-                <div class="ty-schedule" id="scheduleBlock" hidden>
-                    <h2>Skip the wait: book a slot now</h2>
-                    <p>Pick a time that works and talk to a rep on your schedule.</p>
-                    <iframe id="calendlyFrame" class="calendly-embed" title="Book a demo slot" src="" loading="lazy"></iframe>
-                </div>
+                <!-- Callback confirmation (brief §7 MVP callback model): the chosen
+                     slot arrives via same-origin sessionStorage, never URL params.
+                     The generic fallback below stands when the slot is absent.
+                     Calendly embed removed for MVP; phase 2 if callbacks underperform. -->
+                <p id="tyMessage">We'll call you at your chosen time.</p>
 
                 <p class="ty-fallback">
                     Prefer email? Reach us directly at
@@ -67,30 +59,31 @@
             var CFG = window.MOBCONNECT_CONFIG || {};
             window.dataLayer = window.dataLayer || [];
 
-            // Full-solution variant (brief §7 modal 3): query flag switches the message.
-            var variant = new URLSearchParams(window.location.search).get("variant") || "";
-            if (variant === "full-solution") {
-                document.getElementById("tyMessage").textContent = "We'll reach out to scope your project.";
-            }
-            window.dataLayer.push({ event: "thank_you_view", variant: variant || "demo" });
+            // Callback slot message (brief §7 MVP callback model): read the chosen
+            // slot from same-origin sessionStorage (set by the modal on submit).
+            // "Got it. We'll call you [date], [window], [timezone]." Falls back to
+            // the generic markup message when the slot is absent or unreadable.
+            var hasSlot = false;
+            try {
+                var slot = JSON.parse(sessionStorage.getItem("mobconnect_callback") || "null");
+                if (slot && slot.date && slot.window) {
+                    // Parse "YYYY-MM-DD" as LOCAL date (new Date(string) would be UTC and can shift a day).
+                    var p = slot.date.split("-");
+                    var d = new Date(+p[0], +p[1] - 1, +p[2]);
+                    var dateText = d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+                    var tzText = (slot.timezone && slot.timezone !== "other") ? ", " + slot.timezone : "";
+                    document.getElementById("tyMessage").textContent =
+                        "We'll call you " + dateText + ", " + slot.window + tzText + ".";
+                    hasSlot = true;
+                }
+            } catch (err) { /* fall back to generic message */ }
+            window.dataLayer.push({ event: "thank_you_view", has_slot: hasSlot });
 
             // Wire mailto fallback from config.
             var mailto = document.getElementById("salesMailto");
             if (CFG.SALES_EMAIL && mailto) {
                 mailto.href = "mailto:" + CFG.SALES_EMAIL;
                 mailto.textContent = CFG.SALES_EMAIL;
-            }
-
-            // Calendly: show embed only when a real URL is configured (brief §7).
-            if (CFG.CALENDLY_URL) {
-                var block = document.getElementById("scheduleBlock");
-                var frame = document.getElementById("calendlyFrame");
-                frame.src = CFG.CALENDLY_URL;
-                block.hidden = false;
-                window.dataLayer.push({ event: "calendly_shown" });
-                // Note: to also fire a 'calendly_slot_booked' analytics event,
-                // load Calendly's widget.js and listen for its postMessage events
-                // once the real URL is provided.
             }
         })();
     </script>
