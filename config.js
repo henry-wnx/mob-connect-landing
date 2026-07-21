@@ -7,15 +7,16 @@
 window.MOBCONNECT_CONFIG = {
 
   /* --- Lead form endpoint (brief §7 — phase 1, no Zoho) ----------------
-     Form-backend service (Formspree, or Web3Forms if cost matters):
-     submissions are emailed to SALES_EMAIL and stored in the service's
-     exportable table. PLACEHOLDER until the user creates the form and
-     pastes its POST URL here, e.g. "https://formspree.io/f/xxxxxxxx".
-     Accepts a Formspree-style POST (JSON or form-encoded).
-     While empty: script.js logs the lead to the console and the UX flow
-     (redirect / thank-you) still proceeds, so nothing breaks.
+     LIVE (2026-07-21): Formspree free tier. Submissions are emailed to
+     salesmob@ituranusa.com (Formspree notification setting) AND stored
+     in Formspree's exportable submissions table (50/mo on free tier;
+     upgrade when volume demands). POST format: JSON body with an
+     "Accept: application/json" header so Formspree answers JSON and
+     script.js can detect success vs. failure. On failure the modal
+     shows an inline error + mailto (lead never lost silently) and
+     fires callback_request_error.
      Zoho integration = phase 2: swap this endpoint, page untouched. ---- */
-  FORM_ENDPOINT: "",                     // PLACEHOLDER — paste the Formspree/Web3Forms URL here
+  FORM_ENDPOINT: "https://formspree.io/f/mrenljpb",
 
   /* --- Calendly — PHASE 2, dormant (brief §7 MVP callback model) -------
      The MVP is callback-only: no Calendly on the thank-you page. The

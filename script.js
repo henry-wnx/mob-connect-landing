@@ -162,6 +162,8 @@
       document.getElementById("leadModalIntro").textContent = preset.intro;
       form.lead_type.value = leadType;
       form.use_case.value = useCase || ""; // hidden pre-tag from tagged sections (e.g. Turo)
+      document.getElementById("leadSubmitError").hidden = true;
+      document.getElementById("leadSubmitBtn").disabled = false;
       document.getElementById("lf-date").min = minCallDate();
       if (!form.call_timezone.value) form.call_timezone.value = detectTimezone();
       lastFocused = document.activeElement;
@@ -245,7 +247,22 @@
         call_window: lead.call_window, call_timezone: lead.call_timezone
       });
 
-      submitLead(lead).then(function () {
+      var submitBtn = document.getElementById("leadSubmitBtn");
+      var submitError = document.getElementById("leadSubmitError");
+      submitError.hidden = true;
+      submitBtn.disabled = true; // no double submits while the POST is in flight
+
+      submitLead(lead).then(function (result) {
+        if (!result.ok) {
+          /* Submission failed: the lead was NOT captured. Never lose it
+             silently (coordinator rule, 2026-07-21): keep the modal open
+             with the form still filled, show the inline error + mailto,
+             and flag it in analytics. */
+          submitBtn.disabled = false;
+          submitError.hidden = false;
+          track("callback_request_error", { lead_type: lead.lead_type, status: result.status || "network" });
+          return;
+        }
         /* ---- DORMANT: phase-2 order flow (brief §7 MVP callback model).
            Do NOT delete. Re-enable via ORDER_FLOW_ENABLED in config.js:
            pilot leads then get the cookie handoff + order-page redirect. */
@@ -283,24 +300,30 @@
         "; domain=.ituranmobusa.com; path=/; max-age=1800; secure; samesite=lax";
     }
 
-    /* ---------- Lead submission (brief §7 — phase 1 form backend) ----------
-       Formspree-style JSON POST to CFG.FORM_ENDPOINT. While the endpoint is
-       the empty placeholder, log to console and still proceed with the UX
-       flow (redirect / thank-you) so nothing breaks. Never block the user:
-       network failures also proceed (lead loss beats flow breakage). ------ */
+    /* ---------- Lead submission (brief §7 — phase 1 Formspree, LIVE) ----------
+       JSON POST with "Accept: application/json" so Formspree answers JSON
+       and success is detectable. Resolves { ok, status }; never rejects.
+       - ok: caller proceeds to thank-you.
+       - not ok (non-2xx or network error): caller keeps the modal open and
+         shows the inline error + mailto. The lead was NOT captured, so we
+         do not pretend it was.
+       - Empty endpoint (dev/unconfigured): log to console, proceed as ok
+         so the UX flow still works. --------------------------------------- */
     function submitLead(lead) {
       if (!CFG.FORM_ENDPOINT) {
         if (window.console) console.info("[lead] FORM_ENDPOINT not configured. Lead captured locally only:", lead);
-        return Promise.resolve();
+        return Promise.resolve({ ok: true, status: "no-endpoint" });
       }
       return fetch(CFG.FORM_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify(lead)
       }).then(function (r) {
-        if (!r.ok) throw new Error("Form POST failed: " + r.status);
+        if (!r.ok && window.console) console.warn("[lead] Formspree rejected the POST:", r.status);
+        return { ok: r.ok, status: r.status };
       }).catch(function (err) {
-        if (window.console) console.warn("[lead] submission failed, continuing:", err);
+        if (window.console) console.warn("[lead] submission failed (network):", err);
+        return { ok: false, status: "network" };
       });
     }
 

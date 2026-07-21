@@ -598,6 +598,11 @@
                     <label for="lf-notes">Questions or anything we should know? <span class="optional">(optional)</span></label>
                     <textarea id="lf-notes" name="notes" rows="3"></textarea>
                 </div>
+                <!-- Shown only when the Formspree POST fails (non-2xx or network
+                     error): the lead was NOT captured, so never fail silently. -->
+                <div class="form-submit-error" id="leadSubmitError" hidden>
+                    Something went wrong. Call us or email <a href="mailto:salesmob@ituranusa.com">salesmob@ituranusa.com</a>.
+                </div>
                 <button type="submit" class="btn btn-primary" id="leadSubmitBtn" style="width:100%;">Request my call</button>
             </form>
         </div>
