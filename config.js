@@ -6,14 +6,16 @@
 
 window.MOBCONNECT_CONFIG = {
 
-  /* --- Demo form CRM target (brief §7, §10 open item #1) ---------------
-     CRM destination is UNCONFIRMED. Zoho CRM is available but the target
-     module (Leads?) and field mapping are not confirmed. Until then the
-     form POSTs to this documented STUB endpoint. Do NOT guess Zoho fields.
-     When confirmed: set CRM_ENDPOINT to the real intake URL and map fields
-     in script.js submitDemoForm(). ------------------------------------- */
-  CRM_ENDPOINT: "/api/lead-stub",        // STUB — not a live endpoint
-  CRM_ENABLED: false,                    // false => form skips network call, still redirects to thank-you
+  /* --- Lead form endpoint (brief §7 — phase 1, no Zoho) ----------------
+     Form-backend service (Formspree, or Web3Forms if cost matters):
+     submissions are emailed to SALES_EMAIL and stored in the service's
+     exportable table. PLACEHOLDER until the user creates the form and
+     pastes its POST URL here, e.g. "https://formspree.io/f/xxxxxxxx".
+     Accepts a Formspree-style POST (JSON or form-encoded).
+     While empty: script.js logs the lead to the console and the UX flow
+     (redirect / thank-you) still proceeds, so nothing breaks.
+     Zoho integration = phase 2: swap this endpoint, page untouched. ---- */
+  FORM_ENDPOINT: "",                     // PLACEHOLDER — paste the Formspree/Web3Forms URL here
 
   /* --- Calendly (brief §7 — PENDING, user to provide) -----------------
      Leave empty until the real scheduling URL is supplied. Empty string
@@ -22,9 +24,14 @@ window.MOBCONNECT_CONFIG = {
   CALENDLY_URL: "",                      // e.g. "https://calendly.com/ituranmob/demo"
 
   /* --- Canonical site URL (GitHub Pages for now) -----------------------
-     Single source for the deploy origin. NOTE: the og:url / og:image tags
-     in index.html are hardcoded (crawlers don't execute JS) — if this
-     changes, update those tags to match. ------------------------------- */
+     Single source for the deploy origin. Custom domain PENDING:
+     connect.ituranmobusa.com (CNAME file is in the repo root; GitHub
+     Pages will serve it once the user creates the DNS CNAME record ->
+     henry-wnx.github.io; until then the github.io URL keeps working).
+     When DNS is live: update this value AND the hardcoded og:url /
+     og:image tags in index.html (crawlers don't execute JS). The
+     .ituranmobusa.com cookie handoff in script.js activates on the new
+     hostname automatically. ------------------------------------------- */
   SITE_URL: "https://henry-wnx.github.io/mob-connect-landing/",
 
   /* --- Contact --------------------------------------------------------- */

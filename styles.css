@@ -12,6 +12,8 @@
     --navy-light: #16294a;
     --teal-brand: #5dbfbd;
     --teal-deep: #3a9c9a;
+    --teal-cta: #1f8f8b;      /* primary-CTA gradient start (deeper saturation, §5.1) */
+    --teal-cta-deep: #17807d; /* primary-CTA gradient end */
     --green-brand: #96c93e;
     --white: #ffffff;
     --gray-light: #f4f6f8;
@@ -56,13 +58,16 @@ ul { list-style: none; }
     text-align: center;
 }
 .btn-primary {
-    background: linear-gradient(135deg, var(--teal-brand) 0%, var(--teal-deep) 100%);
-    color: var(--white); box-shadow: 0 4px 15px rgba(93, 191, 189, 0.25);
+    /* Deeper teal saturation (brief §5.1 CTA contrast, 2026-07-21): the filled
+       button marks the KPI action. Also lifts white-text contrast to ~4.3-5:1. */
+    background: linear-gradient(135deg, var(--teal-cta) 0%, var(--teal-cta-deep) 100%);
+    color: var(--white); box-shadow: 0 4px 15px rgba(23, 128, 125, 0.3);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(93, 191, 189, 0.42); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(23, 128, 125, 0.45); }
 .btn-secondary { background-color: transparent; border: 2px solid var(--navy-brand); color: var(--navy-brand); }
 .btn-secondary:hover { background-color: var(--navy-brand); color: var(--white); }
-.btn-ghost-light { background: transparent; border: 2px solid rgba(255,255,255,0.6); color: #fff; }
+/* Ghost secondary: thinner border (brief §5.1 CTA contrast — recedes vs. primary) */
+.btn-ghost-light { background: transparent; border: 1px solid rgba(255,255,255,0.55); color: #fff; }
 .btn-ghost-light:hover { background: #fff; color: var(--navy-brand); border-color: #fff; }
 .btn-lg { padding: 1rem 2.6rem; font-size: 1.1rem; }
 .btn:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, .faq-question:focus-visible {
@@ -126,6 +131,13 @@ ul { list-style: none; }
 }
 .step-item h4 { font-size: 1.12rem; margin-bottom: 0.25rem; color: var(--navy-brand); }
 .step-item p { font-size: 0.97rem; color: var(--gray-medium); margin: 0; }
+.step-tag {
+    display: inline-block; margin-top: 0.5rem !important; text-transform: uppercase;
+    letter-spacing: 1.5px; font-size: 0.68rem !important; font-weight: 700; color: var(--teal-deep) !important;
+    border: 1px solid rgba(58,156,154,0.4); border-radius: 999px; padding: 0.15rem 0.7rem;
+}
+/* Mid-page CTA (brief §7 — after conviction moments) */
+.mid-cta { text-align: center; margin-top: 3.5rem; }
 .how-visual { display: flex; flex-direction: column; gap: 1.25rem; }
 .architecture-wrapper {
     background: var(--navy-gradient); border-radius: 12px; padding: 1rem;
@@ -230,6 +242,42 @@ ul { list-style: none; }
 .porsche-play:hover .porsche-play-circle { transform: scale(1.08); }
 .porsche-play-circle svg { width: 30px; height: 30px; margin-left: 3px; }
 .porsche-support { margin: 0.9rem 0 0; font-size: 0.82rem; color: rgba(255,255,255,0.62); line-height: 1.5; }
+.porsche-cta { margin-top: 1.75rem; padding: 0.65rem 1.5rem; font-size: 0.95rem; }
+
+/* ========== TURO FLEETS (brief §5.6b) ========== */
+.turo-section { padding: 6rem 0; background-color: var(--navy-brand); border-top: 1px solid rgba(255,255,255,0.06); }
+.turo-section .eyebrow { color: var(--teal-brand); }
+.turo-section h2 { color: var(--white); }
+.turo-header { margin-bottom: 3rem; }
+.turo-header .turo-sub { color: rgba(255,255,255,0.85); font-size: 1.15rem; }
+.turo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; max-width: 1080px; margin: 0 auto; }
+.turo-card {
+    display: flex; gap: 1rem; align-items: flex-start;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px; padding: 1.9rem 1.6rem;
+}
+.turo-check {
+    width: 30px; height: 30px; flex-shrink: 0; border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal-cta) 0%, var(--teal-cta-deep) 100%);
+    color: var(--white); display: flex; align-items: center; justify-content: center;
+}
+.turo-check svg { width: 16px; height: 16px; }
+.turo-card h3 { color: var(--white); font-size: 1.05rem; line-height: 1.4; margin-bottom: 0.45rem; }
+.turo-card p { color: rgba(255,255,255,0.78); font-size: 0.93rem; margin: 0; }
+.turo-cta { text-align: center; margin-top: 3rem; }
+
+/* ========== FULL-SOLUTION BAND (brief §5.9a — project offering) ========== */
+.fullsol-section { padding: 5.5rem 0; background-color: var(--gray-bg-alt); }
+.fullsol-band {
+    background: var(--navy-gradient); border: 1px solid rgba(93,191,189,0.28); border-radius: 14px;
+    padding: 4rem 3rem; text-align: center; max-width: 980px; margin: 0 auto;
+    box-shadow: 0 18px 40px rgba(12,28,51,0.15);
+}
+.fullsol-band .eyebrow { color: var(--teal-brand); }
+.fullsol-band h2 { color: var(--white); }
+.fullsol-band .fullsol-sub {
+    color: rgba(255,255,255,0.85); font-size: 1.15rem; max-width: 680px; margin: 0 auto 2.25rem;
+}
 
 /* ========== PRICING ========== */
 .pricing-section { padding: 6rem 0; background-color: var(--gray-bg-alt); }
@@ -353,6 +401,7 @@ ul { list-style: none; }
     .why-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
     .porsche-band { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem; text-align: center; }
     .porsche-band-copy h3 { font-size: 1.35rem; }
+    .turo-grid { grid-template-columns: 1fr; max-width: 560px; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
     .nav-menu {
         display: none; flex-direction: column; position: absolute; top: 62px; left: 0; width: 100%;
@@ -376,6 +425,8 @@ ul { list-style: none; }
     .price-badge { white-space: normal; text-align: center; width: max-content; max-width: 92%; }
     .api-band { padding: 1.75rem 1.25rem; }
     .api-band-copy h3 { font-size: 1.3rem; }
+    .fullsol-band { padding: 2.75rem 1.5rem; }
+    .turo-cta .btn, .mid-cta .btn { width: 100%; }
     .install-card { padding: 1.75rem 1.5rem; }
     .footer-grid { grid-template-columns: 1fr; }
     .trusted-logos { gap: 2.25rem; }

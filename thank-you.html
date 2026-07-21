@@ -41,12 +41,12 @@
                     <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
                 </svg>
                 <h1>Got it.</h1>
-                <p>A sales rep will reach out within 24 hours.</p>
+                <p id="tyMessage">A sales rep will reach out within 24 hours.</p>
 
                 <!-- Skip-the-wait scheduling. Calendly is PENDING (brief §7):
                      rendered only when MOBCONNECT_CONFIG.CALENDLY_URL is set. -->
                 <div class="ty-schedule" id="scheduleBlock" hidden>
-                    <h2>Skip the wait — book a slot now</h2>
+                    <h2>Skip the wait: book a slot now</h2>
                     <p>Pick a time that works and talk to a rep on your schedule.</p>
                     <iframe id="calendlyFrame" class="calendly-embed" title="Book a demo slot" src="" loading="lazy"></iframe>
                 </div>
@@ -66,7 +66,13 @@
         (function () {
             var CFG = window.MOBCONNECT_CONFIG || {};
             window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({ event: "thank_you_view" });
+
+            // Full-solution variant (brief §7 modal 3): query flag switches the message.
+            var variant = new URLSearchParams(window.location.search).get("variant") || "";
+            if (variant === "full-solution") {
+                document.getElementById("tyMessage").textContent = "We'll reach out to scope your project.";
+            }
+            window.dataLayer.push({ event: "thank_you_view", variant: variant || "demo" });
 
             // Wire mailto fallback from config.
             var mailto = document.getElementById("salesMailto");

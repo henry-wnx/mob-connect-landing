@@ -101,26 +101,44 @@
       });
     });
 
-    /* ---------- Order CTAs (brief §5.7 secondary flow, same tab) ---------- */
-    document.querySelectorAll("[data-order-cta]").forEach(function (el) {
-      el.addEventListener("click", function (e) {
-        e.preventDefault();
-        track("order_cta_click", { destination: CFG.ORDER_URL });
-        window.location.href = CFG.ORDER_URL; // same tab, per brief
-      });
-    });
-
-    /* ---------- Demo modal open/close (brief §7 Step 1) ---------- */
-    var modal = document.getElementById("demoModal");
+    /* ---------- Lead modal (brief §7 — shared by demo / pilot / full-solution) ----------
+       One modal, one form. The opening CTA sets the hidden lead_type, the
+       title/intro/submit label, and (Turo section) a use_case pre-fill. */
+    var modal = document.getElementById("leadModal");
+    var form = document.getElementById("leadForm");
     var lastFocused = null;
 
-    function openModal() {
+    var MODAL_PRESETS = {
+      "demo": {
+        title: "Book a demo",
+        intro: "Tell us where to reach you. A sales rep will follow up within 24 hours, or book a slot on the next screen.",
+        button: "Request demo"
+      },
+      "pilot": {
+        title: "Start your pilot",
+        intro: "Tell us where to reach you, then continue straight to the order page.",
+        button: "Continue to order"
+      },
+      "full-solution": {
+        title: "Schedule a meeting",
+        intro: "Tell us where to reach you. We'll reach out to scope your project.",
+        button: "Schedule a meeting"
+      }
+    };
+
+    function openModal(leadType, useCase) {
+      var preset = MODAL_PRESETS[leadType] || MODAL_PRESETS.demo;
+      document.getElementById("leadModalTitle").textContent = preset.title;
+      document.getElementById("leadModalIntro").textContent = preset.intro;
+      document.getElementById("leadSubmitBtn").textContent = preset.button;
+      form.lead_type.value = leadType;
+      if (useCase) form.use_case.value = useCase; // pre-fill from tagged sections (e.g. Turo)
       lastFocused = document.activeElement;
       modal.classList.add("active");
       document.body.style.overflow = "hidden";
-      var first = modal.querySelector("input, select, button");
+      var first = modal.querySelector("input:not([type=hidden]), select, button");
       if (first) first.focus();
-      track("demo_modal_open");
+      track("modal_open", { lead_type: leadType });
     }
     function closeModal() {
       modal.classList.remove("active");
@@ -129,7 +147,16 @@
     }
 
     document.querySelectorAll("[data-demo-cta]").forEach(function (el) {
-      el.addEventListener("click", function (e) { e.preventDefault(); openModal(); });
+      el.addEventListener("click", function (e) { e.preventDefault(); openModal("demo"); });
+    });
+    document.querySelectorAll("[data-pilot-cta]").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        openModal("pilot", el.getAttribute("data-use-case") || "");
+      });
+    });
+    document.querySelectorAll("[data-fullsolution-cta]").forEach(function (el) {
+      el.addEventListener("click", function (e) { e.preventDefault(); openModal("full-solution"); });
     });
     modal.querySelectorAll("[data-close-modal]").forEach(function (el) {
       el.addEventListener("click", closeModal);
@@ -139,58 +166,89 @@
       if (e.key === "Escape" && modal.classList.contains("active")) closeModal();
     });
 
-    /* ---------- Demo form submit (brief §7) ---------- */
-    var form = document.getElementById("demoForm");
+    /* ---------- Lead form submit (brief §7) ----------
+       Mandatory: Name + Phone. Optional: email (format-checked only when
+       filled), fleet size, use case. Flow branches on lead_type. */
     function setInvalid(field, bad) {
       var wrap = field.closest(".form-field");
       if (wrap) wrap.classList.toggle("invalid", bad);
     }
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var email = form.email;
-      var fleet = form.fleet_size;
-      var usecase = form.use_case;
-      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
-      var fleetOk = !!fleet.value;
-      var caseOk = !!usecase.value;
+      // form.name is the form's own name attribute, so fields are fetched via elements.
+      var name = form.elements.namedItem("name");
+      var phone = form.elements.namedItem("phone");
+      var email = form.elements.namedItem("email");
+
+      var nameOk = !!name.value.trim();
+      var phoneOk = (phone.value.replace(/\D/g, "").length >= 7);
+      var emailOk = !email.value.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+      setInvalid(name, !nameOk);
+      setInvalid(phone, !phoneOk);
       setInvalid(email, !emailOk);
-      setInvalid(fleet, !fleetOk);
-      setInvalid(usecase, !caseOk);
-      if (!emailOk || !fleetOk || !caseOk) return;
+      if (!nameOk || !phoneOk || !emailOk) return;
 
       var lead = {
+        name: name.value.trim(),
+        phone: phone.value.trim(),
         email: email.value.trim(),
-        phone: form.phone.value.trim(),
-        fleet_size: fleet.value,
-        use_case: usecase.value,
+        fleet_size: form.fleet_size.value,
+        use_case: form.use_case.value,
+        lead_type: form.lead_type.value,
         source: "mob-connect-landing"
       };
-      track("demo_form_submit", { fleet_size: lead.fleet_size, use_case: lead.use_case });
+
+      var SUBMIT_EVENTS = { "demo": "demo_form_submit", "pilot": "pilot_form_submit", "full-solution": "fullsolution_form_submit" };
+      track(SUBMIT_EVENTS[lead.lead_type] || "demo_form_submit", {
+        lead_type: lead.lead_type, fleet_size: lead.fleet_size, use_case: lead.use_case
+      });
+
       submitLead(lead).then(function () {
-        window.location.href = "thank-you.html";
+        if (lead.lead_type === "pilot") {
+          // Checkout pre-fill handoff (brief §7 modal 2): first-party cookie
+          // scoped to .ituranmobusa.com. NEVER in the redirect URL. On
+          // github.io the hostname can't set that cookie: skip silently.
+          setHandoffCookie(lead);
+          window.location.href = CFG.ORDER_URL; // same tab, per brief
+        } else if (lead.lead_type === "full-solution") {
+          window.location.href = "thank-you.html?variant=full-solution";
+        } else {
+          window.location.href = "thank-you.html";
+        }
       });
     });
 
-    /* ---------- CRM submission ----------
-       CRM destination UNCONFIRMED (brief §10 open item #1). Until Zoho
-       module + field mapping is confirmed, we POST to a documented stub
-       and never block the user: any failure still redirects to thank-you
-       (sales also gets the low-intent lead via the two-step flow). ------ */
+    /* ---------- Cookie handoff (brief §7 — pilot flow only) ---------- */
+    function setHandoffCookie(lead) {
+      var h = window.location.hostname;
+      var onDomain = (h === "ituranmobusa.com") || /\.ituranmobusa\.com$/.test(h);
+      if (!onDomain) return; // github.io etc: skip silently, still redirect
+      var payload = {
+        name: lead.name, phone: lead.phone, email: lead.email,
+        fleet_size: lead.fleet_size, use_case: lead.use_case
+      };
+      document.cookie = "mobconnect_lead=" + encodeURIComponent(JSON.stringify(payload)) +
+        "; domain=.ituranmobusa.com; path=/; max-age=1800; secure; samesite=lax";
+    }
+
+    /* ---------- Lead submission (brief §7 — phase 1 form backend) ----------
+       Formspree-style JSON POST to CFG.FORM_ENDPOINT. While the endpoint is
+       the empty placeholder, log to console and still proceed with the UX
+       flow (redirect / thank-you) so nothing breaks. Never block the user:
+       network failures also proceed (lead loss beats flow breakage). ------ */
     function submitLead(lead) {
-      if (!CFG.CRM_ENABLED || !CFG.CRM_ENDPOINT) {
-        // Stub mode: log the payload shape a real CRM integration would receive.
-        if (window.console) console.info("[CRM stub] lead captured (not sent):", lead);
+      if (!CFG.FORM_ENDPOINT) {
+        if (window.console) console.info("[lead] FORM_ENDPOINT not configured. Lead captured locally only:", lead);
         return Promise.resolve();
       }
-      return fetch(CFG.CRM_ENDPOINT, {
+      return fetch(CFG.FORM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify(lead)
       }).then(function (r) {
-        if (!r.ok) throw new Error("CRM POST failed: " + r.status);
+        if (!r.ok) throw new Error("Form POST failed: " + r.status);
       }).catch(function (err) {
-        if (window.console) console.warn("[CRM] submission failed, continuing:", err);
-        // Do not block the user — proceed to thank-you regardless.
+        if (window.console) console.warn("[lead] submission failed, continuing:", err);
       });
     }
 
