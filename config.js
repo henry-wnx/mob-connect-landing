@@ -23,16 +23,14 @@ window.MOBCONNECT_CONFIG = {
      Calendly embed stays hidden. Dropping in the URL is the only change. */
   CALENDLY_URL: "",                      // e.g. "https://calendly.com/ituranmob/demo"
 
-  /* --- Canonical site URL (GitHub Pages for now) -----------------------
-     Single source for the deploy origin. Custom domain PENDING:
-     connect.ituranmobusa.com (CNAME file is in the repo root; GitHub
-     Pages will serve it once the user creates the DNS CNAME record ->
-     henry-wnx.github.io; until then the github.io URL keeps working).
-     When DNS is live: update this value AND the hardcoded og:url /
-     og:image tags in index.html (crawlers don't execute JS). The
-     .ituranmobusa.com cookie handoff in script.js activates on the new
-     hostname automatically. ------------------------------------------- */
-  SITE_URL: "https://henry-wnx.github.io/mob-connect-landing/",
+  /* --- Canonical site URL (custom domain LIVE, 2026-07-21) -------------
+     Single source for the deploy origin: connect.ituranmobusa.com,
+     served by GitHub Pages via the CNAME file in the repo root (DNS
+     CNAME record -> henry-wnx.github.io). HTTPS enforced. The hardcoded
+     og:url / og:image tags in index.html must stay in sync with this
+     value (crawlers don't execute JS). The .ituranmobusa.com cookie
+     handoff in script.js is active on this hostname. ------------------- */
+  SITE_URL: "https://connect.ituranmobusa.com/",
 
   /* --- Contact --------------------------------------------------------- */
   SALES_EMAIL: "salesmob@ituranusa.com",
