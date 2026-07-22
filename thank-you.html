@@ -5,6 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thank you | mob-connect</title>
     <meta name="robots" content="noindex">
+
+    <!-- Meta Pixel (ID documented in config.js META_PIXEL_ID). The Lead
+         conversion fires in the inline script below, gated + deduped. -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1625831645324162');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1625831645324162&ev=PageView&noscript=1"
+    /></noscript>
+
+    <!-- Google tag (gtag.js) — Google Ads (ID documented in config.js GOOGLE_ADS_ID). -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18140187963"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-18140187963');
+    </script>
+
     <link rel="stylesheet" href="styles.css?v=66752ef">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,6 +106,18 @@
                 }
             } catch (err) { /* fall back to generic message */ }
             window.dataLayer.push({ event: "thank_you_view", has_slot: hasSlot });
+
+            // Ad conversions (increment #6): fire HERE, not at submit time
+            // (submit-time fbq/gtag races the redirect and loses events).
+            // Gated on the callback slot (direct visits never count) and
+            // deduped across refreshes via the conversion_fired flag.
+            var alreadyFired = false;
+            try { alreadyFired = !!sessionStorage.getItem("conversion_fired"); } catch (err) {}
+            if (hasSlot && !alreadyFired) {
+                try { sessionStorage.setItem("conversion_fired", "1"); } catch (err) {}
+                if (typeof fbq === "function") fbq('track', 'Lead');
+                if (typeof gtag === "function") gtag('event', 'conversion', { 'send_to': 'AW-18140187963/yPQoCN6hodQcELua9clD' });
+            }
 
             // Wire mailto fallback from config.
             var mailto = document.getElementById("salesMailto");

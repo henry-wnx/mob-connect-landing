@@ -62,5 +62,18 @@ window.MOBCONNECT_CONFIG = {
      Instrumentation choice = GA4 (dev's call, flagged in handoff). No
      Measurement ID yet — set GA4_ID to enable real gtag; until then
      track() logs to console + window.dataLayer so events are verifiable. */
-  GA4_ID: ""                             // e.g. "G-XXXXXXXXXX"
+  GA4_ID: "",                            // e.g. "G-XXXXXXXXXX"
+
+  /* --- Ad platform tags (marketing, 2026-07-22) ------------------------
+     Documented here for discoverability; the actual snippets are
+     HARDCODED in each page's <head> per vendor bootstrap requirements
+     (they must run before other scripts and don't read config).
+     If either ID ever changes, update the <head> of index.html,
+     thank-you.html, and privacy.html together with these constants.
+     Conversion events (fbq 'Lead' + gtag 'conversion', label
+     yPQoCN6hodQcELua9clD) fire on thank-you.html ONLY, gated on the
+     callback slot (direct visits never count) and deduped via the
+     conversion_fired sessionStorage flag. ------------------------------ */
+  META_PIXEL_ID: "1625831645324162",
+  GOOGLE_ADS_ID: "AW-18140187963"
 };
