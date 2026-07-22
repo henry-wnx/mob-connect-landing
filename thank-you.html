@@ -6,32 +6,28 @@
     <title>Thank you | mob-connect</title>
     <meta name="robots" content="noindex">
 
-    <!-- Meta Pixel (ID documented in config.js META_PIXEL_ID). The Lead
-         conversion fires in the inline script below, gated + deduped. -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1625831645324162');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1625831645324162&ev=PageView&noscript=1"
-    /></noscript>
-
-    <!-- Google tag (gtag.js) — Google Ads (ID documented in config.js GOOGLE_ADS_ID). -->
+    <!-- Google tag (gtag.js) — Google Ads (ID documented in config.js GOOGLE_ADS_ID).
+         Consent Mode v2 (brief §7): region CA denied by default, granted elsewhere;
+         consent defaults MUST precede config. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18140187963"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+      gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', region: ['CA'] });
+      gtag('consent', 'default', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted' });
       gtag('config', 'AW-18140187963');
     </script>
+
+    <!-- Consent + Meta Pixel loader (brief §7): pixel immediate for non-CA,
+         deferred behind the banner for Canadian visitors. The Lead conversion
+         in the inline script below is fbq-guarded, so it respects the same
+         consent state automatically. -->
+    <script src="consent.js?v=1f48f9a"></script>
+    <!-- noscript fallback cannot be consent-gated (no JS); negligible. -->
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1625831645324162&ev=PageView&noscript=1"
+    /></noscript>
 
     <link rel="stylesheet" href="styles.css?v=1f48f9a">
     <link rel="preconnect" href="https://fonts.googleapis.com">

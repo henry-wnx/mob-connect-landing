@@ -398,6 +398,19 @@ ul { list-style: none; }
 }
 .form-submit-error a { color: #a93226; font-weight: 600; text-decoration: underline; }
 
+/* ========== CONSENT BANNER (brief §7 — Canadian visitors only) ========== */
+.consent-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 1500; /* under the modal (2000) */
+    background: var(--navy-brand); color: rgba(255,255,255,0.92);
+    border-top: 1px solid rgba(255,255,255,0.12); box-shadow: 0 -6px 24px rgba(0,0,0,0.3);
+    padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: center;
+    gap: 0.75rem 1.75rem; flex-wrap: wrap; font-size: 0.92rem; line-height: 1.5;
+}
+.consent-banner p { margin: 0; }
+.consent-banner a { color: var(--teal-brand); font-weight: 600; text-decoration: underline; }
+.consent-actions { display: flex; gap: 0.75rem; flex-shrink: 0; }
+.consent-banner .btn { padding: 0.5rem 1.4rem; font-size: 0.92rem; }
+
 /* ========== RESPONSIVE ========== */
 @media (max-width: 980px) {
     h1 { font-size: 2.4rem; }
