@@ -158,6 +158,9 @@ ul { list-style: none; }
 .api-band-img {
     width: 100%; height: auto; display: block; border-radius: 8px;
     border: 1px solid rgba(255,255,255,0.14);
+    /* Asset is square; center-crop to the band's designed 4:3 (the trimmed
+       top/bottom are empty dark background, subject stays fully in frame). */
+    aspect-ratio: 4 / 3; object-fit: cover;
 }
 
 /* ========== CONTROL (keyless, not control-less) ========== */
