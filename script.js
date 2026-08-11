@@ -200,8 +200,8 @@
     });
 
     /* ---------- Callback form submit (brief §7 MVP callback model) ----------
-       Mandatory: Name, Phone, Best time to call (date >= tomorrow, time
-       window, timezone). Optional: company, fleet size, notes. All lead
+       Mandatory: Name, Phone, Email, Best time to call (date >= tomorrow,
+       time window, timezone). Optional: company, fleet size, notes. All lead
        types share one flow: POST -> sessionStorage slot -> thank-you. */
     function setInvalid(field, bad) {
       var wrap = field.closest(".form-field");
@@ -212,25 +212,30 @@
       // form.name is the form's own name attribute, so fields are fetched via elements.
       var name = form.elements.namedItem("name");
       var phone = form.elements.namedItem("phone");
+      var email = form.elements.namedItem("email");
       var date = form.elements.namedItem("call_date");
       var windowSel = form.elements.namedItem("call_window");
       var tz = form.elements.namedItem("call_timezone");
 
       var nameOk = !!name.value.trim();
       var phoneOk = (phone.value.replace(/\D/g, "").length >= 7);
+      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
       var dateOk = !!date.value && date.value >= minCallDate(); // ISO dates compare lexicographically
       var windowOk = !!windowSel.value;
       var tzOk = !!tz.value;
       setInvalid(name, !nameOk);
       setInvalid(phone, !phoneOk);
+      setInvalid(email, !emailOk);
       setInvalid(date, !dateOk);
       setInvalid(windowSel, !windowOk);
       setInvalid(tz, !tzOk);
-      if (!nameOk || !phoneOk || !dateOk || !windowOk || !tzOk) return;
+      if (!nameOk || !phoneOk || !emailOk || !dateOk || !windowOk || !tzOk) return;
 
       var lead = {
         name: name.value.trim(),
         phone: phone.value.trim(),
+        // Key MUST stay "email": Formspree reads it to set the Reply-To header.
+        email: email.value.trim(),
         call_date: date.value,
         call_window: windowSel.value,
         call_timezone: tz.value,

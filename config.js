@@ -18,12 +18,6 @@ window.MOBCONNECT_CONFIG = {
      Zoho integration = phase 2: swap this endpoint, page untouched. ---- */
   FORM_ENDPOINT: "https://formspree.io/f/mrenljpb",
 
-  /* --- Calendly — PHASE 2, dormant (brief §7 MVP callback model) -------
-     The MVP is callback-only: no Calendly on the thank-you page. The
-     embed scaffolding was removed from thank-you.html; if the callback
-     model underperforms, restore it there and uncomment this constant. */
-  // CALENDLY_URL: "",                   // PHASE 2 — e.g. "https://calendly.com/ituranmob/demo"
-
   /* --- Canonical site URL (custom domain LIVE, 2026-07-21) -------------
      Single source for the deploy origin: connect.ituranmobusa.com,
      served by GitHub Pages via the CNAME file in the repo root (DNS

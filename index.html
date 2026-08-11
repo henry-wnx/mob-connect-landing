@@ -550,8 +550,10 @@
 
     <!-- ========== CALLBACK MODAL (§7 MVP callback model — one shared modal) ==========
          Lead collection only at launch: every CTA opens this modal, the lead
-         picks when sales calls them. Mandatory: Name, Phone, Best time to call
-         (date min tomorrow + time window + timezone). Optional: Company, Fleet
+         picks when sales calls them. Mandatory: Name, Phone, Email, Best time to
+         call (date min tomorrow + time window + timezone). The field name MUST
+         stay literally "email": Formspree uses it to set the notification's
+         Reply-To header. Optional: Company, Fleet
          size, Notes. Hidden lead_type: demo | pilot | full-solution; hidden
          use_case pre-tagged from the Turo section. Timezone auto-detected from
          the browser, editable. Order redirect + cookie handoff DORMANT (phase 2,
@@ -573,6 +575,11 @@
                     <label for="lf-phone">Phone</label>
                     <input type="tel" id="lf-phone" name="phone" required autocomplete="tel" placeholder="+1 (555) 000-0000">
                     <div class="form-error">Please enter a valid phone number.</div>
+                </div>
+                <div class="form-field">
+                    <label for="lf-email">Email</label>
+                    <input type="email" id="lf-email" name="email" required autocomplete="email" placeholder="you@company.com">
+                    <div class="form-error">Please enter a valid email address.</div>
                 </div>
                 <div class="form-field">
                     <label for="lf-date">Best time to call</label>
