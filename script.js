@@ -23,6 +23,55 @@
 
   document.addEventListener("DOMContentLoaded", function () {
 
+    /* ---------- Ad click tracking (brief §7, taxonomy 2026-09-10) ----------
+       Microconversions only. The LEAD (thank-you.html) stays the only real
+       conversion; this secondary label must be a Secondary action in the
+       Google Ads UI, excluded from bidding.
+
+       One delegated listener on document. It resolves the tracked element
+       with closest() so clicks landing on an inner span, icon or the &rarr;
+       entity still register. It NEVER calls preventDefault() or returns
+       false: modals still open, anchors still scroll, the form still
+       submits. gtag/fbq are both guarded because a Canadian visitor who
+       declined consent genuinely has no fbq on the page.
+       Payload is button + page metadata only. No personal data. */
+    var CLICK_CONVERSION = "AW-18140187963/VTfqCISVqNscELua9clD";
+    var META_EVENT_BY_TYPE = {
+      demo: "DemoCTAClick",
+      pricing: "PricingCTAClick",
+      lead_button: "LeadButtonClick"
+    };
+
+    document.addEventListener("click", function (e) {
+      var el = e.target && e.target.closest ? e.target.closest("[data-track-type]") : null;
+      if (!el) return;
+
+      var type = el.getAttribute("data-track-type") || "";
+      var metaEvent = META_EVENT_BY_TYPE[type];
+      if (!metaEvent) return;
+
+      // Visible label, with the trailing arrow entity stripped. Never used
+      // to identify the CTA (that is data-track-name); diagnostics only.
+      var text = (el.textContent || "").replace(/\s+/g, " ").replace(/[\u2192\s]+$/, "").trim();
+
+      var params = {
+        button_name: el.getAttribute("data-track-name") || "",
+        button_text: text,
+        button_location: el.getAttribute("data-track-location") || "",
+        page_path: window.location.pathname,
+        page_url: window.location.href
+      };
+
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "conversion", { send_to: CLICK_CONVERSION });
+      }
+      if (typeof window.fbq === "function") {
+        window.fbq("trackCustom", metaEvent, params);
+      }
+
+      track("cta_click", params);
+    });
+
     /* ---------- Mobile nav toggle ---------- */
     var toggle = document.querySelector(".mobile-toggle");
     var navMenu = document.getElementById("navMenu");

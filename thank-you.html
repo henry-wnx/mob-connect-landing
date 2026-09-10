@@ -110,7 +110,12 @@
             try { alreadyFired = !!sessionStorage.getItem("conversion_fired"); } catch (err) {}
             if (hasSlot && !alreadyFired) {
                 try { sessionStorage.setItem("conversion_fired", "1"); } catch (err) {}
-                if (typeof fbq === "function") fbq('track', 'Lead');
+                if (typeof fbq === "function") fbq('track', 'Lead', {
+                    content_name: 'IturanMob Connect Demo Request',
+                    content_category: 'Demo Request',
+                    form_name: 'ituranmob_connect_form',
+                    conversion_page: 'thank_you'
+                });
                 if (typeof gtag === "function") gtag('event', 'conversion', { 'send_to': 'AW-18140187963/yPQoCN6hodQcELua9clD' });
             }
 
