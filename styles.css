@@ -313,7 +313,17 @@ ul { list-style: none; }
 .price { font-size: 2.6rem; font-weight: 700; color: var(--navy-brand); line-height: 1; margin-bottom: 0.35rem; }
 .price span { font-size: 1rem; color: var(--gray-medium); font-weight: 400; }
 .price-promo { font-size: 0.92rem; color: var(--gray-medium); margin-bottom: 0.35rem; }
-.device-cost { font-size: 0.92rem; color: var(--teal-deep); font-weight: 600; margin-bottom: 1.5rem; }
+.hardware-block { margin-bottom: 1.5rem; }
+.hardware-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--gray-medium); margin-bottom: 0.5rem; }
+.hardware-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.92rem; color: var(--navy-brand); font-weight: 600; padding: 0.2rem 0; }
+.hardware-name { display: flex; align-items: center; gap: 0.5rem; }
+.hardware-price { color: var(--teal-deep); white-space: nowrap; }
+.hardware-row--oos .hardware-price { color: var(--gray-medium); }
+.oos-tag {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+    color: var(--gray-medium); background: var(--gray-light); border: 1px solid var(--border-color);
+    border-radius: 999px; padding: 0.15rem 0.55rem; white-space: nowrap;
+}
 .price-card hr { border: 0; border-top: 1px solid var(--border-color); margin: 0 0 1.5rem; width: 100%; }
 .price-features { margin-bottom: 2rem; flex-grow: 1; display: flex; flex-direction: column; gap: 0.75rem; }
 .price-features li { font-size: 0.95rem; display: flex; align-items: flex-start; line-height: 1.4; color: var(--gray-dark); }
