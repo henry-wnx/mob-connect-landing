@@ -320,8 +320,8 @@ ul { list-style: none; }
     color: var(--gray-medium); background: var(--gray-light); border: 1px solid var(--border-color);
     border-radius: 999px; padding: 0.15rem 0.55rem; white-space: nowrap;
 }
-/* By-pass module on mob-connect Secure: shown, not omitted, but muted (brief §5.7) */
-.hardware-row--na { opacity: 0.55; }
+/* By-pass module on mob-connect Secure, and unavailable feature rows: shown, not omitted, but muted (brief §5.7) */
+.hardware-row--na, .price-features li.feature-unavailable { opacity: 0.55; }
 .hardware-row--na .hardware-name { font-weight: 600; }
 .hardware-row--na .hardware-note {
     width: 100%; font-size: 0.82rem; font-weight: 400; font-style: italic; color: var(--gray-medium);
