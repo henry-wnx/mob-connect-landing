@@ -101,13 +101,20 @@ ul { list-style: none; }
 .hero-content h1 .text-teal { color: var(--teal-brand); text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
 .hero-content p { font-size: 1.3rem; color: rgba(255,255,255,0.94); margin: 0 auto 2.5rem; max-width: 720px; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
 .hero-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-.hero-content .hero-reqs {
+/* Capability chips (brief §5.1 v5): three chips under the CTAs, one line on
+   desktop, 2+1 stack on mobile (flex-wrap, centered). White on navy overlay
+   stays well above AA. */
+.hero-chips {
     margin: 1.75rem auto 0; max-width: 860px; display: flex; flex-wrap: wrap; justify-content: center;
-    gap: 0.4rem 1.4rem; font-size: 0.92rem; font-weight: 500; color: rgba(255,255,255,0.9);
-    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    gap: 0.6rem 0.75rem; list-style: none; padding: 0;
 }
-.hero-reqs .req { white-space: nowrap; }
-.hero-reqs .check { color: var(--teal-brand); font-weight: 700; margin-right: 0.35rem; }
+.chip {
+    display: inline-flex; align-items: center; gap: 0.45rem; white-space: nowrap;
+    padding: 0.45rem 0.95rem; border-radius: 999px;
+    background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.28);
+    font-size: 0.92rem; font-weight: 500; color: rgba(255,255,255,0.95); line-height: 1.2;
+}
+.chip-check { color: var(--teal-brand); font-weight: 700; font-size: 1rem; line-height: 1; }
 
 /* ========== PROBLEM ========== */
 .problem-section { padding: 5.5rem 0; background-color: var(--white); }
@@ -285,63 +292,92 @@ ul { list-style: none; }
 /* ========== PRICING ========== */
 .pricing-section { padding: 6rem 0; background-color: var(--gray-bg-alt); }
 .section-header .pricing-anchor { color: var(--navy-brand); font-size: 1.12rem; font-weight: 500; margin-top: 0.25rem; }
-.pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 880px; margin: 0 auto; align-items: stretch; }
-.price-card {
-    background: var(--white); border-radius: 14px; padding: 2.5rem; position: relative;
-    border: 1px solid var(--border-color); display: flex; flex-direction: column;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+/* ---- Decision path (brief §5.7 v2): Block A -> Decision 1 -> Decision 2 fork.
+   Vertical connector lines between blocks read as one path, top to bottom. ---- */
+.pricing-path { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; align-items: stretch; }
+.pricing-path > * + * { position: relative; margin-top: 3rem; }
+.pricing-path > * + *::before {
+    /* connector: short teal line from the block above */
+    content: ''; position: absolute; left: 50%; top: -3rem; width: 2px; height: 3rem;
+    background: var(--teal-brand); transform: translateX(-50%);
 }
-.price-card:hover { transform: translateY(-5px); box-shadow: 0 18px 45px rgba(12,28,51,0.1); }
-.price-card.featured {
-    border: 2px solid var(--teal-brand);
-    box-shadow: 0 14px 40px rgba(12,28,51,0.12);
-    padding-top: 3rem;
+
+/* Block A: the start. Largest type in the section, the visual anchor. */
+.price-start {
+    background: var(--navy-gradient); color: var(--white); border-radius: 14px; padding: 2.75rem 2.5rem;
+    text-align: center; border: 1px solid rgba(93,191,189,0.28); box-shadow: 0 18px 40px rgba(12,28,51,0.15);
 }
-.price-badge {
-    position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, var(--teal-brand) 0%, var(--teal-deep) 100%);
-    color: var(--white); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.3px;
-    padding: 0.4rem 1.1rem; border-radius: 999px; white-space: nowrap;
-    box-shadow: 0 4px 14px rgba(58,156,154,0.35);
+.price-start-label { text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; font-weight: 700; color: var(--teal-brand); margin-bottom: 0.6rem; }
+.price-start-price { font-size: 4rem; font-weight: 700; line-height: 1; letter-spacing: -2px; color: var(--white); margin-bottom: 1rem; }
+.price-start-price span { display: block; font-size: 1rem; font-weight: 400; letter-spacing: 0; color: rgba(255,255,255,0.78); margin-top: 0.6rem; }
+.price-start-desc { font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.55; max-width: 620px; margin: 0 auto; }
+
+/* Decisions */
+.decision { text-align: center; }
+.decision .eyebrow { margin-bottom: 0.4rem; }
+.decision-q { font-size: 1.45rem; letter-spacing: -0.3px; margin-bottom: 1.25rem; }
+.decision-row {
+    background: var(--white); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04); max-width: 640px; margin: 0 auto;
 }
-.plan-name { font-size: 1.25rem; font-weight: 700; color: var(--navy-brand); margin-bottom: 0.5rem; }
-.price-subhead { font-size: 0.92rem; color: var(--gray-medium); line-height: 1.45; margin-bottom: 1.1rem; }
-.price { font-size: 2.6rem; font-weight: 700; color: var(--navy-brand); line-height: 1; margin-bottom: 0.35rem; }
-.price span { font-size: 1rem; color: var(--gray-medium); font-weight: 400; }
-.price-promo { font-size: 0.92rem; color: var(--gray-medium); margin-bottom: 0.35rem; }
-.hardware-block { margin-top: 1.75rem; margin-bottom: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
-.hardware-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--gray-medium); margin-bottom: 0.6rem; }
-.hardware-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.92rem; color: var(--navy-brand); font-weight: 600; padding: 0.2rem 0; flex-wrap: wrap; }
-.hardware-name { display: flex; align-items: center; gap: 0.5rem; }
-.hardware-price { color: var(--teal-deep); white-space: nowrap; }
-.hardware-row--oos .hardware-price { color: var(--gray-medium); }
-.oos-tag, .req-tag {
+.decision-answer { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem 0.75rem; margin-bottom: 0.6rem; }
+.decision-price { font-size: 1.35rem; font-weight: 700; color: var(--navy-brand); }
+.decision-unit { font-size: 0.95rem; color: var(--gray-medium); }
+.decision-note { font-size: 0.95rem; color: var(--gray-medium); margin: 0; }
+.oos-tag {
     font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
     color: var(--gray-medium); background: var(--gray-light); border: 1px solid var(--border-color);
-    border-radius: 999px; padding: 0.15rem 0.55rem; white-space: nowrap;
+    border-radius: 999px; padding: 0.2rem 0.65rem; white-space: nowrap;
 }
-/* By-pass module on mob-connect Secure, and unavailable feature rows: shown, not omitted, but muted (brief §5.7) */
-.hardware-row--na, .price-features li.feature-unavailable { opacity: 0.55; }
-.hardware-row--na .hardware-name { font-weight: 600; }
-.hardware-row--na .hardware-note {
-    width: 100%; font-size: 0.82rem; font-weight: 400; font-style: italic; color: var(--gray-medium);
-    order: 3; margin-top: 0.1rem;
+
+/* The fork: two sides, Key featured left */
+.fork { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; align-items: stretch; text-align: left; }
+.fork-side {
+    background: var(--white); border-radius: 14px; padding: 2.25rem 2rem 2rem; position: relative;
+    border: 1px solid var(--border-color); display: flex; flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
 }
-.price-card hr { border: 0; border-top: 1px solid var(--border-color); margin: 0 0 1.5rem; width: 100%; }
-.price-features { margin-bottom: 2rem; flex-grow: 1; display: flex; flex-direction: column; gap: 0.75rem; }
-.price-features li { font-size: 0.95rem; display: flex; align-items: flex-start; line-height: 1.4; color: var(--gray-dark); }
-.price-features li::before { content: '✓'; color: var(--teal-brand); font-weight: 900; margin-right: 0.7rem; flex-shrink: 0; }
-.price-features li.api-line { font-weight: 600; }
+.fork-side.featured { border: 2px solid var(--teal-brand); box-shadow: 0 14px 40px rgba(12,28,51,0.12); }
+.fork-answer {
+    display: inline-block; align-self: flex-start; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    padding: 0.3rem 0.85rem; border-radius: 999px; margin-bottom: 1rem;
+    color: var(--navy-brand); background: var(--gray-light); border: 1px solid var(--border-color);
+}
+.fork-side.featured .fork-answer { color: var(--white); background: var(--navy-brand); border-color: var(--navy-brand); }
+.plan-name { font-size: 1.25rem; font-weight: 700; color: var(--navy-brand); margin-bottom: 0.5rem; }
+.price { font-size: 2.6rem; font-weight: 700; color: var(--navy-brand); line-height: 1; margin-bottom: 0.9rem; }
+.price span { font-size: 1rem; color: var(--gray-medium); font-weight: 400; }
+.fork-hardware { font-size: 0.88rem; color: var(--gray-medium); line-height: 1.5; margin-bottom: 1.1rem; padding-bottom: 1.1rem; border-bottom: 1px solid var(--border-color); }
+.price-subhead { font-size: 1rem; color: var(--navy-brand); font-weight: 600; line-height: 1.45; margin-bottom: 1.5rem; flex-grow: 1; }
 .price-btn { width: 100%; margin-top: auto; }
-.pricing-fine {
-    max-width: 880px; margin: 2rem auto 0; font-size: 0.85rem; color: var(--gray-medium); line-height: 1.6;
+
+/* ---- Comparison table (brief §5.7): parity rule, gray out what's unavailable, never omit ---- */
+.compare { max-width: 880px; margin: 4rem auto 0; }
+.compare-heading { text-align: center; font-size: 1.45rem; letter-spacing: -0.3px; margin-bottom: 1.5rem; }
+.compare-table {
+    width: 100%; border-collapse: separate; border-spacing: 0; background: var(--white);
+    border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; font-size: 0.95rem;
 }
+.compare-table th, .compare-table td { padding: 0.85rem 1.1rem; border-top: 1px solid var(--border-color); vertical-align: middle; }
+.compare-table thead th { border-top: 0; background: var(--navy-brand); color: var(--white); font-weight: 700; font-size: 0.95rem; text-align: center; }
+.compare-table thead th.compare-feature-col { text-align: left; }
+.compare-table tbody th { text-align: left; font-weight: 600; color: var(--navy-brand); white-space: nowrap; }
+.compare-table tbody td { text-align: center; color: var(--gray-dark); width: 24%; }
+.compare-table tbody tr:nth-child(even) { background: var(--gray-light); }
+.row-sub { display: block; font-size: 0.78rem; font-weight: 400; color: var(--gray-medium); line-height: 1.3; margin-top: 0.1rem; }
+.inc::before { content: '✓'; color: var(--teal-deep); font-weight: 900; margin-right: 0.45rem; }
+/* Grayed cell. Keeps the "shown, not omitted" rule; color is AA-safe gray
+   (plain opacity 0.55 drops body-size text under 4.5:1). */
+.compare-table td.feature-unavailable { color: var(--gray-medium); font-style: italic; }
+.compare-table td.feature-unavailable::before { content: '–'; color: var(--gray-medium); opacity: 0.55; margin-right: 0.45rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
 .pricing-friendly {
     max-width: 880px; margin: 2.5rem auto 0.5rem; text-align: center; font-size: 1rem;
     color: var(--navy-brand); font-weight: 500;
 }
-.pricing-fine ul { list-style: disc; padding-left: 1.25rem; margin-top: 0.5rem; }
-.pricing-fine li { margin-bottom: 0.3rem; }
+.pricing-fine { max-width: 880px; margin: 0 auto; text-align: center; font-size: 0.85rem; color: var(--gray-medium); line-height: 1.6; }
 
 /* ---- Installation support strip (brief §5.7b) ---- */
 .install-strip { margin-top: 4rem; }
@@ -464,8 +500,25 @@ ul { list-style: none; }
     .porsche-band { padding: 1.75rem 1.25rem; }
     .porsche-band-copy h3 { font-size: 1.2rem; }
     .porsche-play-circle { width: 60px; height: 60px; }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 440px; }
-    .price-badge { white-space: normal; text-align: center; width: max-content; max-width: 92%; }
+    .hero-content { padding: 1rem 0; }
+    .chip { font-size: 0.78rem; padding: 0.35rem 0.6rem; gap: 0.35rem; }
+    .chip-check { font-size: 0.85rem; }
+    .price-start { padding: 2rem 1.25rem; }
+    .price-start-price { font-size: 3.2rem; }
+    .decision-q { font-size: 1.2rem; }
+    .decision-row { padding: 1.25rem 1.25rem; }
+    .fork { grid-template-columns: 1fr; gap: 1.5rem; } /* stacks, Key (featured) first in DOM */
+    .fork-side { padding: 1.75rem 1.5rem; }
+    /* Table stacks: row label on its own full line, the two plan cells beneath with their plan name */
+    .compare-table thead { display: none; }
+    .compare-table, .compare-table tbody { display: block; }
+    .compare-table tbody tr { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border-color); }
+    .compare-table tbody tr:first-child { border-top: 0; }
+    .compare-table th, .compare-table td { border-top: 0; }
+    .compare-table tbody th { grid-column: 1 / -1; padding: 0.8rem 1rem 0.2rem; white-space: normal; }
+    .compare-table tbody td { width: auto; text-align: left; padding: 0.15rem 1rem 0.8rem; font-size: 0.9rem; }
+    .compare-table tbody td::before { content: attr(data-plan); display: block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--gray-medium); margin-bottom: 0.1rem; }
+    .compare-table td.feature-unavailable::before { content: attr(data-plan); font-style: normal; opacity: 1; margin-right: 0; }
     .api-band { padding: 1.75rem 1.25rem; }
     .api-band-copy h3 { font-size: 1.3rem; }
     .fullsol-band { padding: 2.75rem 1.5rem; }
