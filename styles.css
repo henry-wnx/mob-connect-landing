@@ -335,10 +335,10 @@ ul { list-style: none; }
 .fork { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; align-items: stretch; text-align: left; }
 .fork-side {
     background: var(--white); border-radius: 14px; padding: 2.25rem 2rem 2rem; position: relative;
-    border: 1px solid var(--border-color); display: flex; flex-direction: column;
+    border: 2px solid var(--border-color); display: flex; flex-direction: column;
     box-shadow: 0 4px 15px rgba(0,0,0,0.04);
 }
-.fork-side.featured { border: 2px solid var(--teal-brand); box-shadow: 0 14px 40px rgba(12,28,51,0.12); }
+.fork-side.featured { border-color: var(--teal-brand); box-shadow: 0 14px 40px rgba(12,28,51,0.12); }
 .fork-answer {
     display: inline-block; align-self: flex-start; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
     padding: 0.3rem 0.85rem; border-radius: 999px; margin-bottom: 1rem;
@@ -353,6 +353,15 @@ ul { list-style: none; }
 .price-subhead { font-size: 1rem; color: var(--navy-brand); font-weight: 600; line-height: 1.45; min-height: calc(1rem * 1.45 * 2); margin-bottom: 1.5rem; flex-grow: 1; }
 .price-btn { width: 100%; margin-top: auto; }
 .fork-note { font-size: 0.85rem; color: var(--gray-medium); text-align: center; margin: 1.1rem auto 0; max-width: 640px; }
+/* Row-level alignment across both sides: each side is a subgrid spanning the same six rows
+   (answer, hardware, plan, price, subhead, CTA), so a longer line on one side pushes the SAME row on the other. */
+@supports (grid-template-rows: subgrid) {
+    .fork-side { display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; align-content: start; }
+    .fork-answer { align-self: start; justify-self: start; }
+    .fork-hardware { min-height: 0; }
+    .price-subhead { min-height: 0; flex-grow: 0; }
+    .price-btn { margin-top: 0; align-self: end; }
+}
 
 /* ---- Comparison table (brief §5.7): parity rule, gray out what's unavailable, never omit ---- */
 .compare { max-width: 880px; margin: 4rem auto 0; }
