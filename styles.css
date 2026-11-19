@@ -313,8 +313,9 @@ ul { list-style: none; }
 .price { font-size: 2.6rem; font-weight: 700; color: var(--navy-brand); line-height: 1; margin-bottom: 0.35rem; }
 .price span { font-size: 1rem; color: var(--gray-medium); font-weight: 400; }
 .price-promo { font-size: 0.92rem; color: var(--gray-medium); margin-bottom: 0.35rem; }
-.hardware-block { margin-bottom: 1.5rem; }
-.hardware-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--gray-medium); margin-bottom: 0.5rem; }
+.price-excluded { font-size: 0.88rem; color: var(--gray-medium); font-style: italic; margin: -0.35rem 0 0; }
+.hardware-block { margin-top: 1.75rem; margin-bottom: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+.hardware-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--gray-medium); margin-bottom: 0.6rem; }
 .hardware-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.92rem; color: var(--navy-brand); font-weight: 600; padding: 0.2rem 0; }
 .hardware-name { display: flex; align-items: center; gap: 0.5rem; }
 .hardware-price { color: var(--teal-deep); white-space: nowrap; }
