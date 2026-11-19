@@ -101,20 +101,11 @@ ul { list-style: none; }
 .hero-content h1 .text-teal { color: var(--teal-brand); text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
 .hero-content p { font-size: 1.3rem; color: rgba(255,255,255,0.94); margin: 0 auto 2.5rem; max-width: 720px; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
 .hero-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-/* Capability chips (brief §5.1 v5): three chips under the CTAs, one line on
-   desktop, 2+1 stack on mobile (flex-wrap, centered). White on navy overlay
-   stays well above AA. */
-.hero-chips {
-    margin: 1.75rem auto 0; max-width: 860px; display: flex; flex-wrap: wrap; justify-content: center;
-    gap: 0.6rem 0.75rem; list-style: none; padding: 0;
+/* Trust line (brief §5.1 v6): one quiet line under the CTAs. Specificity must beat .hero-content p. */
+.hero-content p.hero-trust {
+    margin: 1.6rem auto 0; max-width: 620px; text-align: center;
+    font-size: 0.92rem; font-weight: 400; color: rgba(255,255,255,0.78); line-height: 1.5;
 }
-.chip {
-    display: inline-flex; align-items: center; gap: 0.45rem; white-space: nowrap;
-    padding: 0.45rem 0.95rem; border-radius: 999px;
-    background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.28);
-    font-size: 0.92rem; font-weight: 500; color: rgba(255,255,255,0.95); line-height: 1.2;
-}
-.chip-check { color: var(--teal-brand); font-weight: 700; font-size: 1rem; line-height: 1; }
 
 /* ========== PROBLEM ========== */
 .problem-section { padding: 5.5rem 0; background-color: var(--white); }
@@ -512,8 +503,7 @@ ul { list-style: none; }
     .porsche-band-copy h3 { font-size: 1.2rem; }
     .porsche-play-circle { width: 60px; height: 60px; }
     .hero-content { padding: 1rem 0; }
-    .chip { font-size: 0.78rem; padding: 0.35rem 0.6rem; gap: 0.35rem; }
-    .chip-check { font-size: 0.85rem; }
+    .hero-content p.hero-trust { font-size: 0.85rem; }
     .price-start { padding: 2rem 1.25rem; }
     .price-start-price { font-size: 3.2rem; }
     .decision-q { font-size: 1.2rem; }
