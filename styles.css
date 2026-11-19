@@ -131,11 +131,6 @@ ul { list-style: none; }
 }
 .step-item h4 { font-size: 1.12rem; margin-bottom: 0.25rem; color: var(--navy-brand); }
 .step-item p { font-size: 0.97rem; color: var(--gray-medium); margin: 0; }
-.step-tag {
-    display: inline-block; margin-top: 0.5rem !important; text-transform: uppercase;
-    letter-spacing: 1.5px; font-size: 0.68rem !important; font-weight: 700; color: var(--teal-deep) !important;
-    border: 1px solid rgba(58,156,154,0.4); border-radius: 999px; padding: 0.15rem 0.7rem;
-}
 /* Mid-page CTA (brief §7 — after conviction moments) */
 .mid-cta { text-align: center; margin-top: 3.5rem; }
 .how-visual { display: flex; flex-direction: column; gap: 1.25rem; }
@@ -173,7 +168,7 @@ ul { list-style: none; }
 .control-section h2 { color: var(--white); }
 .control-intro { max-width: 780px; margin: 0 auto 3.5rem; text-align: center; }
 .control-intro p { color: rgba(255,255,255,0.82); font-size: 1.15rem; }
-.control-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.75rem; }
+.control-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
 .control-card {
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px;
     padding: 2rem 1.6rem; transition: all 0.3s ease;
@@ -183,10 +178,10 @@ ul { list-style: none; }
 .control-card h3 { color: var(--white); font-size: 1.15rem; margin-bottom: 0.5rem; }
 .control-card p { color: rgba(255,255,255,0.78); font-size: 0.93rem; margin: 0; }
 .control-callout {
-    margin-top: 3rem; text-align: center; max-width: 720px; margin-left: auto; margin-right: auto;
-    font-size: 1.15rem; color: var(--white); font-weight: 500;
+    margin-top: 3.5rem; text-align: center; max-width: 760px; margin-left: auto; margin-right: auto;
 }
-.control-callout span { color: var(--teal-brand); }
+.callout-lead { font-size: 1.85rem; font-weight: 700; color: var(--white); line-height: 1.3; margin-bottom: 0.9rem; letter-spacing: -0.3px; }
+.callout-sub { font-size: 1.05rem; color: rgba(255,255,255,0.8); font-weight: 400; line-height: 1.55; margin: 0; }
 
 /* ========== TRUSTED BY (§5.5 — removable, data-driven block) ========== */
 .trusted-section { padding: 6rem 0; background-color: var(--navy-brand); border-top: 1px solid rgba(255,255,255,0.06); }
@@ -309,21 +304,28 @@ ul { list-style: none; }
     padding: 0.4rem 1.1rem; border-radius: 999px; white-space: nowrap;
     box-shadow: 0 4px 14px rgba(58,156,154,0.35);
 }
-.plan-name { font-size: 1.25rem; font-weight: 700; color: var(--navy-brand); margin-bottom: 0.75rem; }
+.plan-name { font-size: 1.25rem; font-weight: 700; color: var(--navy-brand); margin-bottom: 0.5rem; }
+.price-subhead { font-size: 0.92rem; color: var(--gray-medium); line-height: 1.45; margin-bottom: 1.1rem; }
 .price { font-size: 2.6rem; font-weight: 700; color: var(--navy-brand); line-height: 1; margin-bottom: 0.35rem; }
 .price span { font-size: 1rem; color: var(--gray-medium); font-weight: 400; }
 .price-promo { font-size: 0.92rem; color: var(--gray-medium); margin-bottom: 0.35rem; }
-.price-excluded { font-size: 0.88rem; color: var(--gray-medium); font-style: italic; margin: -0.35rem 0 0; }
 .hardware-block { margin-top: 1.75rem; margin-bottom: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
 .hardware-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--gray-medium); margin-bottom: 0.6rem; }
-.hardware-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.92rem; color: var(--navy-brand); font-weight: 600; padding: 0.2rem 0; }
+.hardware-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.92rem; color: var(--navy-brand); font-weight: 600; padding: 0.2rem 0; flex-wrap: wrap; }
 .hardware-name { display: flex; align-items: center; gap: 0.5rem; }
 .hardware-price { color: var(--teal-deep); white-space: nowrap; }
 .hardware-row--oos .hardware-price { color: var(--gray-medium); }
-.oos-tag {
+.oos-tag, .req-tag {
     font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
     color: var(--gray-medium); background: var(--gray-light); border: 1px solid var(--border-color);
     border-radius: 999px; padding: 0.15rem 0.55rem; white-space: nowrap;
+}
+/* By-pass module on mob-connect Secure: shown, not omitted, but muted (brief §5.7) */
+.hardware-row--na { opacity: 0.55; }
+.hardware-row--na .hardware-name { font-weight: 600; }
+.hardware-row--na .hardware-note {
+    width: 100%; font-size: 0.82rem; font-weight: 400; font-style: italic; color: var(--gray-medium);
+    order: 3; margin-top: 0.1rem;
 }
 .price-card hr { border: 0; border-top: 1px solid var(--border-color); margin: 0 0 1.5rem; width: 100%; }
 .price-features { margin-bottom: 2rem; flex-grow: 1; display: flex; flex-direction: column; gap: 0.75rem; }
@@ -441,6 +443,7 @@ ul { list-style: none; }
     .why-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
     .porsche-band { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem; text-align: center; }
     .porsche-band-copy h3 { font-size: 1.35rem; }
+    .callout-lead { font-size: 1.55rem; }
     .turo-grid { grid-template-columns: 1fr; max-width: 560px; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
     .nav-menu {
